@@ -53,7 +53,7 @@ public class RepositorioUsuario implements IRepositorioUsuario{
             ResultSet rs = pstmt.executeQuery();
             
             if(rs.next()){
-                String contrasenaHash = rs.getString("contrasena");
+                String contrasenaHash = rs.getString("contrasena");                
                 return BCrypt.checkpw(usuario.getContrasenia(), contrasenaHash);
             }
             
@@ -71,9 +71,9 @@ public class RepositorioUsuario implements IRepositorioUsuario{
                 + "	apellidos text NOT NULL,\n"
                 + "	celular int,\n"
                 + "	programa text NOT NULL CHECK (programa IN ('Ingeniería_de_Sistemas', 'Ingeniería_Electrónica_y_Telecomunicaciones', 'Automática_industrial', 'Tecnología_en_Telemática')),\n"
-                + "	rol text CHECK NOT NULL(rol IN ('Docente', 'Estudiante')),\n"
+                + "	rol text NOT NULL CHECK (rol IN ('Docente', 'Estudiante')),\n"
                 + "	email text PRIMARY KEY,\n"
-                + "	contrasena text NOT NULL,\n"                 
+                + "	contrasena text NOT NULL \n"                 
                 + ");";
 
         try {
