@@ -5,6 +5,7 @@ import com.unicauca.proyectogestion.service.Servicio;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -41,7 +42,20 @@ public class RepositorioUsuario implements IRepositorioUsuario{
     
     public boolean iniciarSesion(Usuario usuario){
         
-        
+        try{
+            String sql = "SELECT contrasena FROM Usuario WHERE email = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, usuario.getEmail());
+            ResultSet rs = pstmt.executeQuery();
+            
+            if(rs.next()){
+                String contrasenaHash = rs.getString("contrasena");
+                return BCrypt.checkpw(usuario.getContrasenia(), contrasenaHash);
+            }
+            
+        } catch(SQLException ex){
+            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+        }            
         
         return false;
     }
