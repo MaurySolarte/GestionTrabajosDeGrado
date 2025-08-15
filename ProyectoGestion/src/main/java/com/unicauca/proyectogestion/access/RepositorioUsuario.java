@@ -15,6 +15,10 @@ import org.mindrot.jbcrypt.BCrypt;
 public class RepositorioUsuario implements IRepositorioUsuario{
     private Connection conn;
     
+    public RepositorioUsuario() {
+        initDatabase();
+    }
+    
     public boolean registrarUsuario(Usuario nuevoUsuario){
         String contrasenaHash = BCrypt.hashpw(nuevoUsuario.getContrasenia(), BCrypt.gensalt());
         
