@@ -1,0 +1,6 @@
+com\unicauca\proyectogestion\access\RepositorioUsuario.class
+com\unicauca\proyectogestion\access\IRepositorioUsuario.class
+com\unicauca\proyectogestion\main.class
+com\unicauca\proyectogestion\service\Servicio.class
+com\unicauca\proyectogestion\domain\Usuario.class
+com\unicauca\proyectogestion\access\Gestion.class
