@@ -10,6 +10,7 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
+   
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
@@ -21,16 +22,13 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.49.1.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>13</version>
-        </dependency>
+       
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>13</version>
         </dependency>
+       
     </dependencies>
     <build>
         <plugins>

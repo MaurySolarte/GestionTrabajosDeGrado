@@ -13,7 +13,12 @@ public class Servicio {
     
     public boolean registrarUsuario(Usuario nuevoUsuario){
         
-     return false;   
+        if(nuevoUsuario == null || nuevoUsuario.getNombres() == null){
+            return false;
+        }
+        repositorio.registrarUsuario(nuevoUsuario);
+        
+        return true;   
     }
     
     public boolean iniciarSesion(Usuario usuario){
@@ -21,18 +26,18 @@ public class Servicio {
     }
     
     public String validarContrasenaSegura(String contrasena) {
-            if (contrasena.length() < 6) {
-                return "La contraseña debe tener al menos 6 caracteres.";
-            }
-            if (!contrasena.matches(".[A-Z].")) {
-                return "La contraseña debe contener al menos una letra mayúscula.";
-            }
-            if (!contrasena.matches(".\\d.")) {
-                return "La contraseña debe contener al menos un número.";
-            }
-            if (!contrasena.matches(".[!@#$%^&(),.?\":{}|<>].*")) {
-                return "La contraseña debe contener al menos un carácter especial.";
-            }
-        return "OK";
-    }
+        if (contrasena.length() < 6) {
+            return "La contraseña debe tener al menos 6 caracteres.";
+        }
+        if (!contrasena.matches(".*[A-Z].*")) {
+            return "La contraseña debe contener al menos una letra mayúscula.";
+        }
+        if (!contrasena.matches(".*\\d.*")) {
+            return "La contraseña debe contener al menos un número.";
+        }
+        if (!contrasena.matches(".*[!@#$%^&(),.?\":{}|<>].*")) {
+            return "La contraseña debe contener al menos un carácter especial.";
+        }
+    return "OK";
+}
 }
