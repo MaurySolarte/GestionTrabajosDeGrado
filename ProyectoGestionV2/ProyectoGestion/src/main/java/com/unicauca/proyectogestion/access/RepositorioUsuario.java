@@ -19,11 +19,15 @@ public class RepositorioUsuario implements IRepositorioUsuario{
         initDatabase();
     }
     
-    public boolean registrarUsuario(Usuario nuevoUsuario){
+    public boolean registrarUsuario(Usuario nuevoUsuario) throws SQLException{
         String contrasenaHash = BCrypt.hashpw(nuevoUsuario.getContrasenia(), BCrypt.gensalt());
         
         try{
             //this.connect();
+            if(buscarEmail(nuevoUsuario.getEmail())){
+                return false;
+            }
+            
             String sql = "INSERT INTO Usuario VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, nuevoUsuario.getNombres());
@@ -39,9 +43,26 @@ public class RepositorioUsuario implements IRepositorioUsuario{
             return true;
         } catch(SQLException ex){
             Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+            throw ex;
+        }        
      
+    }
+    
+    public boolean buscarEmail(String email){
+        try{
+            String sqlValidacion = "SELECT email FROM Usuario WHERE email = ?";
+            PreparedStatement statement = conn.prepareStatement(sqlValidacion);
+            statement.setString(1, email);
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){                
+                return true;
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        
+        return false;
     }
     
     public boolean iniciarSesion(Usuario usuario){

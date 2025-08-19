@@ -2,6 +2,7 @@ package com.unicauca.proyectogestion.service;
 
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
 import com.unicauca.proyectogestion.domain.Usuario;
+import java.sql.SQLException;
 
 public class Servicio {
     
@@ -11,14 +12,13 @@ public class Servicio {
         this.repositorio = repositorio;
     }
     
-    public boolean registrarUsuario(Usuario nuevoUsuario){
+    public boolean registrarUsuario(Usuario nuevoUsuario) throws SQLException{
         
         if(nuevoUsuario == null || nuevoUsuario.getNombres() == null){
             return false;
         }
-        repositorio.registrarUsuario(nuevoUsuario);
-        
-        return true;   
+                
+        return repositorio.registrarUsuario(nuevoUsuario); 
     }
     
     public boolean iniciarSesion(Usuario usuario){

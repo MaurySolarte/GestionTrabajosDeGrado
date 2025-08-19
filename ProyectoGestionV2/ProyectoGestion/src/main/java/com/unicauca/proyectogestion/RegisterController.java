@@ -13,14 +13,20 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javax.swing.JOptionPane;
 
 public class RegisterController implements Initializable {
@@ -53,11 +59,11 @@ public class RegisterController implements Initializable {
     private Button btnCrearCuenta;
     
 
-    
-    Gestion gestion = new Gestion();
-    IRepositorioUsuario repositorio = null;
-    Usuario nuevoUsuario = null;
-    Servicio servicio = null;
+    //Variables globales de objetos que se usan en toda la clase.
+    //Gestion gestion = new Gestion();
+    //IRepositorioUsuario repositorio = null;
+    private Usuario nuevoUsuario = null;
+    private Servicio servicio = null;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,16 +76,66 @@ public class RegisterController implements Initializable {
             
             )                               
         );        
-        repositorio = gestion.obtenerRepositorio("SQLite");        
-        servicio = new Servicio(repositorio);        
+        
+        txtCelular.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*")) {
+                    txtCelular.setText(newValue.replaceAll("[^\\d]", "")); 
+                }
+            }
+        );
+        
+        //repositorio = gestion.obtenerRepositorio("SQLite");        
+        //servicio = new Servicio(repositorio);        
     }  
+
+    public void setServicio(IRepositorioUsuario repositorio) {
+        servicio = new Servicio(repositorio);
+    }
+
+    
     
     @FXML
     private void eventClickbtnCrearCuenta(ActionEvent event) {
+                        
+        if(validarCamposVacios() == false){
+            capturarDatosUsuario();
+            if(validarContrasenia()){
+            registrarUsuario();
+            }
+        }        
+                
+    }
+    
+    private boolean validarCamposVacios(){        
         
+        if(txtNombres.getText() == ""){                        
+            mostrarAlerta("Campos vacíos", "Por favor ingrese sus nombres.", Alert.AlertType.WARNING);
+            return true;
+        }else if(txtApellidos.getText() == ""){            
+            mostrarAlerta("Campos vacíos", "Por favor ingrese sus apellidos.", Alert.AlertType.WARNING);
+            return true;
+        }else if(txtCorreo.getText() == ""){            
+            mostrarAlerta("Campos vacíos", "Por favor ingrese un correo.", Alert.AlertType.WARNING);
+            return true;
+        }else if(txtContrasenia.getText() == ""){            
+            mostrarAlerta("Campos vacíos", "Por favor ingrese una contraseña.", Alert.AlertType.WARNING);
+            return true;
+        }else if(cbxPrograma.getValue() == null){            
+            mostrarAlerta("Campos vacíos", "Por favor seleccione el programa al que pertenece.", Alert.AlertType.WARNING);
+            return true;
+        }else if(chbxDocente.isSelected() == false && chbxEstudiante.isSelected() == false){            
+            mostrarAlerta("Por favor seleccione un rol.", "Campos vacíos", Alert.AlertType.WARNING);
+            return true;
+        }      
+        return false;
+        
+    }
+    
+    private void capturarDatosUsuario(){
         String nombres = txtNombres.getText();
         String apellidos = txtApellidos.getText();
         String correo = txtCorreo.getText();
+        
         String contrasenia = txtContrasenia.getText();
         int celular = Integer.parseInt(txtCelular.getText());
         EnumProgramas programa = null;
@@ -103,18 +159,66 @@ public class RegisterController implements Initializable {
         
         nuevoUsuario = new Usuario(nombres, apellidos, celular, programa, rol, correo, contrasenia);
         
-        if(servicio.validarContrasenaSegura(contrasenia) == "OK"){
-            servicio.registrarUsuario(nuevoUsuario);
-            JOptionPane.showMessageDialog(null, "Cuenta creada exitosamente", "Cuenta creada", JOptionPane.INFORMATION_MESSAGE);
-        }
-        else{
-            JOptionPane.showMessageDialog(null,servicio.validarContrasenaSegura(contrasenia), "Contraseña Incorrecta",JOptionPane.ERROR_MESSAGE);
-        }
-        
-        
-        
-        
     }
+    
+    private void registrarUsuario(){
+        try{        
+            if(servicio.registrarUsuario(nuevoUsuario)){                                
+                mostrarAlerta("Cuenta creada", "Cuenta creada exitosamente", Alert.AlertType.INFORMATION);
+            }
+            else{                
+                mostrarAlerta("Cuenta existente.", "Ya existe una cuenta registrada con ese correo.", Alert.AlertType.ERROR);
+            }
+        }catch(SQLException ex){            
+            mostrarAlerta("Error al crear cuenta.", ex.getMessage(), Alert.AlertType.ERROR);
+        }
+    }    
+    
+    private boolean validarContrasenia(){
+        if(servicio.validarContrasenaSegura(nuevoUsuario.getContrasenia()) == "OK"){                            
+            return true;
+        }
+        else{            
+            mostrarAlerta("Contraseña Incorrecta", servicio.validarContrasenaSegura(nuevoUsuario.getContrasenia()), Alert.AlertType.ERROR);
+            return false;
+        }
+    }
+    
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+
+        // Cambiar título e ícono de ventana
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+
+        // Crear un Label personalizado para el mensaje
+            Label etiqueta = new Label(mensaje);
+        etiqueta.setWrapText(true);
+        etiqueta.setStyle("-fx-font-Tebuchet MS: 14px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;");
+
+        // Meter el Label en un contenedor para darle padding
+            VBox contenedor = new VBox(etiqueta);
+        contenedor.setSpacing(10);
+        contenedor.setPadding(new Insets(10));
+
+        alerta.getDialogPane().setContent(contenedor);
+
+        // Aplicar estilo al cuadro de diálogo completo
+        alerta.getDialogPane().setStyle(
+            "-fx-background-color: #f9f9f9; " +
+            "-fx-border-color: #ABBEF6; " +
+            "-fx-border-width: 1px; " +
+            "-fx-border-radius: 5px; " +
+            "-fx-background-radius: 5px;"
+        );
+
+        // Cambiar estilo de los botones
+        alerta.getDialogPane().lookupButton(ButtonType.OK)
+              .setStyle("-fx-background-color: #1E2C9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7px;");
+
+        alerta.showAndWait();
+    }
+
     
     @FXML
     private void eventClickchbxEstudiante(ActionEvent event) {
@@ -129,5 +233,6 @@ public class RegisterController implements Initializable {
             this.chbxEstudiante.setSelected(false);
         }
     }
+        
     
 }
