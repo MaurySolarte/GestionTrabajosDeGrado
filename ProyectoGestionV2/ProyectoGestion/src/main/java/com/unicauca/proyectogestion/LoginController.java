@@ -49,12 +49,25 @@ public class LoginController implements Initializable {
 
         switch (valido) {
             case 1:
-                Usuario objUsuario = service.obtenerUsuarioPorEmail(correo); 
-                mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
-                Navegacion.cambiarVista("dashboardProfesor");
-                DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");                               
-                controlador.setUsuario(objUsuario);
+                Usuario objUsuario = service.obtenerUsuarioPorEmail(correo);                                                 
+                String rol = service.obtenerRolUsuario(correo);
+
+                if ("Docente".equalsIgnoreCase(rol)) {
+                    mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
+                    Navegacion.cambiarVista("dashboardProfesor");
+                    DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");                               
+                    controlador.setUsuario(objUsuario);                
+                } else if ("Estudiante".equalsIgnoreCase(rol)) {
+                    mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);                    
+                    Navegacion.cambiarVista("dashboardEstudiante");
+                    DashboardEstudianteController controlador = Navegacion.getController("dashboardEstudiante");                               
+                    controlador.setUsuario(objUsuario);                
+                    
+                } else {
+                    mostrarAlerta("Error", "No se pudo determinar el rol del usuario", Alert.AlertType.ERROR);
+                }
                 break;
+                
             case 2:
                 mostrarAlerta("Error de login", "Por favor llene todos los campos requeridos para iniciar sesion", Alert.AlertType.INFORMATION);
                 break;

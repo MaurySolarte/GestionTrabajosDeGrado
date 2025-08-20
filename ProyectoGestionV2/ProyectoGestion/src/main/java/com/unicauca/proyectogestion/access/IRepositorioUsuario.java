@@ -1,10 +1,13 @@
 package com.unicauca.proyectogestion.access;
 import com.unicauca.proyectogestion.domain.*;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface IRepositorioUsuario {
     
     boolean iniciarSesion(String email, String contrasenia);
     boolean registrarUsuario(Usuario nuevoUsuario) throws SQLException;
-    public Usuario obtenerUsuarioPorEmail(String email);
+    boolean buscarEmail(Connection conn, String email) throws SQLException;
+    Usuario obtenerUsuarioPorEmail(String email);
+    String obtenerRolUsuario(String email);
 }

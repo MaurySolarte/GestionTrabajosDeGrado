@@ -3,13 +3,13 @@ package com.unicauca.proyectogestion.domain;
 public class Usuario {
     private String nombres;
     private String apellidos;    
-    private double celular;
+    private String celular;
     private EnumProgramas programa;
     private EnumRoles rol;
     private String email;    
     private String contrasenia;    
 
-    public Usuario(String nombres, String apellidos, double celular, EnumProgramas programa, EnumRoles rol, String email, String contrasenia) {
+    public Usuario(String nombres, String apellidos, String celular, EnumProgramas programa, EnumRoles rol, String email, String contrasenia) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.celular = celular;
@@ -35,11 +35,11 @@ public class Usuario {
         this.apellidos = apellidos;
     }
 
-    public double getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(double celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 
@@ -74,6 +74,5 @@ public class Usuario {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-    
     
 }

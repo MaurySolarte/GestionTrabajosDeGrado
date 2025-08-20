@@ -138,7 +138,7 @@ public class RegisterController implements Initializable {
         String correo = txtCorreo.getText();
         
         String contrasenia = txtContrasenia.getText();
-        int celular = Integer.parseInt(txtCelular.getText());
+        String celular = txtCelular.getText();
         EnumProgramas programa = null;
         switch(cbxPrograma.getValue()){
             case "Ingeniería de Sistemas":

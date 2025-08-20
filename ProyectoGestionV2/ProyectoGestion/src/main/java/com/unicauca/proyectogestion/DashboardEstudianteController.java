@@ -4,6 +4,7 @@
  */
 package com.unicauca.proyectogestion;
 
+import com.unicauca.proyectogestion.*;
 import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import java.net.URL;
@@ -15,15 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-/**
- * FXML Controller class
- *
- * @author admin
- */
-public class DashboardProfesorController implements Initializable {
+public class DashboardEstudianteController implements Initializable {
 
-     @FXML
+    @FXML
     private Label lblNombre;
+    @FXML
+    private Button btn_cerrarSesion;
     @FXML
     private TextField txtNombres;
     @FXML
@@ -38,12 +36,18 @@ public class DashboardProfesorController implements Initializable {
     private TextField txtEmail;
     
     private Usuario usuario;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }   
+
+    }    
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        cargarUsuario();
+    }
     
-    public void cargarUsuario(){
+    private void cargarUsuario(){
         txtNombres.setText(usuario.getNombres());
         lblNombre.setText(usuario.getNombres() +" "+ usuario.getApellidos());
         txtApellidos.setText(usuario.getApellidos());
@@ -53,14 +57,9 @@ public class DashboardProfesorController implements Initializable {
         txtRol.setText(String.valueOf(usuario.getRol()));
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-        cargarUsuario();
-    }
-    
-     @FXML
-    void eventBtnCerrarSesion(ActionEvent event) {
-         Navegacion.cambiarVista("login");
+    @FXML
+    private void eventBtnCerrarSesion(ActionEvent event) {
+        Navegacion.cambiarVista("login");
     }
     
 }

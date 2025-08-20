@@ -33,7 +33,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, nuevoUsuario.getNombres());
                 pstmt.setString(2, nuevoUsuario.getApellidos());
-                pstmt.setDouble(3, nuevoUsuario.getCelular()); // sigue siendo double
+                pstmt.setString(3, nuevoUsuario.getCelular()); // sigue siendo double
                 pstmt.setString(4, nuevoUsuario.getPrograma().toString());
                 pstmt.setString(5, nuevoUsuario.getRol().toString());
                 pstmt.setString(6, nuevoUsuario.getEmail());
@@ -48,7 +48,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
         }
     }
 
-    private boolean buscarEmail(Connection conn, String email) throws SQLException {
+    public boolean buscarEmail(Connection conn, String email) throws SQLException {
         String sqlValidacion = "SELECT email FROM Usuario WHERE email = ?";
         try (PreparedStatement statement = conn.prepareStatement(sqlValidacion)) {
             statement.setString(1, email);
@@ -57,6 +57,25 @@ public class RepositorioUsuario implements IRepositorioUsuario {
             }
         }
     }
+    
+    public String obtenerRolUsuario(String email) {
+    String sql = "SELECT rol FROM Usuario WHERE email = ?";
+
+    try (Connection conn = DriverManager.getConnection(URL);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setString(1, email);
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getString("rol"); // Puede ser "Docente" o "Estudiante"
+            }
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null; // Si no existe el usuario
+}
     
     public Usuario obtenerUsuarioPorEmail(String email) {
         String sql = "SELECT * FROM Usuario WHERE email = ?";
@@ -71,8 +90,8 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                     return new Usuario(
                             rs.getString("nombres"),
                             rs.getString("apellidos"),
-                            rs.getInt("celular"),
-                            EnumProgramas.valueOf(rs.getString("programa")), // depende de tu enum
+                            rs.getString("celular"),
+                            EnumProgramas.valueOf(rs.getString("programa")),
                             EnumRoles.valueOf(rs.getString("rol")),
                             rs.getString("email"),
                             null
@@ -82,7 +101,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
         } catch (SQLException ex) {
             Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null; // si no lo encuentra
+        return null; 
     }
     
     @Override
@@ -110,7 +129,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
         String sql = "CREATE TABLE IF NOT EXISTS Usuario (\n"
                 + "	nombres text NOT NULL,\n"
                 + "	apellidos text NOT NULL,\n"
-                + "	celular real,\n" // lo dejo como REAL
+                + "	celular text,\n" // lo dejo como REAL
                 + "	programa text NOT NULL CHECK (programa IN ('Ingeniería_de_Sistemas', 'Ingeniería_Electrónica_y_Telecomunicaciones', 'Automática_industrial', 'Tecnología_en_Telemática')),\n"
                 + "	rol text NOT NULL CHECK (rol IN ('Docente', 'Estudiante')),\n"
                 + "	email text PRIMARY KEY,\n"

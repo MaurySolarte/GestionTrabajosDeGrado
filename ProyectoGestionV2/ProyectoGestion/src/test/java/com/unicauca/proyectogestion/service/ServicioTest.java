@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ServicioTest {
-    
-    @Test
+
+     @Test
     public void testRegistrarUsuario() throws Exception {
         System.out.println("registrarUsuarioNuevo");        
-        Usuario nuevoUsuario = new Usuario("Nelson Rodrigo", "Lopez Vidales",3216169841.0, EnumProgramas.Ingeniería_de_Sistemas, EnumRoles.Estudiante, "nelsonlv@unicauca.edu.co", "Nelson12?");
+        Usuario nuevoUsuario = new Usuario("Nelson Rodrigo", "Lopez Vidales","3216169841", EnumProgramas.Ingeniería_de_Sistemas, EnumRoles.Estudiante, "nelsonl2v@unicauca.edu.co", "Nelson12?");
         IRepositorioUsuario repository = new RepositorioUsuario();
         Servicio instance = new Servicio(repository);
         boolean expResult = true;
@@ -24,7 +24,7 @@ public class ServicioTest {
     @Test
     public void testRegistrarUsuario1() throws Exception {
         System.out.println("registrarUsuarioRepetido");        
-        Usuario nuevoUsuario = new Usuario("Nelson Rodrigo", "Lopez Vidales",3216169841.0, EnumProgramas.Ingeniería_de_Sistemas, EnumRoles.Estudiante, "nelsonlv@unicauca.edu.co", "Nelson123?");
+        Usuario nuevoUsuario = new Usuario("Nelson Rodrigo", "Lopez Vidales","3216169841", EnumProgramas.Ingeniería_de_Sistemas, EnumRoles.Estudiante, "nelsonlv@unicauca.edu.co", "Nelson123?");
         IRepositorioUsuario repository = new RepositorioUsuario();
         Servicio instance = new Servicio(repository);
         boolean expResult = false;
@@ -134,7 +134,105 @@ public class ServicioTest {
         String result = instance.validarContrasenaSegura(contrasena);
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testObtenerUsuarioPorEmail() {
+        System.out.println("Obtener usuario por email existente.");
+        String email = "maury@unicauca.edu.co";
+        IRepositorioUsuario repository = new RepositorioUsuario();
+        Servicio instance = new Servicio(repository);
+        Usuario expResult = new Usuario("Mauricio", "Solarte", "3045661375", EnumProgramas.Ingeniería_de_Sistemas, EnumRoles.Estudiante, "maury@unicauca.edu.co", null);
+        Usuario result = instance.obtenerUsuarioPorEmail(email);   
+        assertEquals(expResult.getNombres(), result.getNombres());
+        assertEquals(expResult.getApellidos(), result.getApellidos());
+        assertEquals(expResult.getCelular(), result.getCelular());
+        assertEquals(expResult.getPrograma(), result.getPrograma());
+        assertEquals(expResult.getRol(), result.getRol());
+        assertEquals(expResult.getEmail(), result.getEmail());     
+        
+    }
     
+    @Test
+    public void testObtenerUsuarioPorEmail1() {
+        System.out.println("Obtener usuario por email no existente.");
+        String email = "maury2@unicauca.edu.co";
+        IRepositorioUsuario repository = new RepositorioUsuario();
+        Servicio instance = new Servicio(repository);
+        Usuario expResult = null;
+        Usuario result = instance.obtenerUsuarioPorEmail(email);
+        assertEquals(expResult, result);
+        
+    }
+
+    @Test
+    public void testObtenerRolUsuario() {
+        System.out.println("Obtener rol de usuario existente.");
+        String email = "maury@unicauca.edu.co";
+        IRepositorioUsuario repository = new RepositorioUsuario();
+        Servicio instance = new Servicio(repository);        
+        String expResult = "Estudiante";
+        String result = instance.obtenerRolUsuario(email);
+        assertEquals(expResult, result);
+        
+    }
     
+    public void testObtenerRolUsuario1() {
+        System.out.println("Obtener rol de usuario no existente.");
+        String email = "maury2@unicauca.edu.co";
+        IRepositorioUsuario repository = new RepositorioUsuario();
+        Servicio instance = new Servicio(repository);        
+        String expResult = null;
+        String result = instance.obtenerRolUsuario(email);
+        assertEquals(expResult, result);
+        
+    }
+
+
+    @Test
+    public void testValidarCorreoInstitucional() {
+        System.out.println("Validar correo institucional exitoso");
+        String correo = "maury@unicauca.edu.co";
+        IRepositorioUsuario repository = new RepositorioUsuario();
+        Servicio instance = new Servicio(repository);  
+        String expResult = "OK";
+        String result = instance.validarCorreoInstitucional(correo);
+        assertEquals(expResult, result);
+        
+    }
     
+    @Test
+    public void testValidarCorreoInstitucional1() {
+        System.out.println("Validar correo institucional fallido, no pertenece a unicauca.");
+        String correo = "maury@gmail.com";
+        IRepositorioUsuario repository = new RepositorioUsuario();
+        Servicio instance = new Servicio(repository);  
+        String expResult = "El correo debe pertenecer al dominio @unicauca.edu.co.";
+        String result = instance.validarCorreoInstitucional(correo);
+        assertEquals(expResult, result);
+        
+    }
+    
+    @Test
+    public void testValidarCorreoInstitucional2() {
+        System.out.println("Validar correo institucional fallido, no contiene @");
+        String correo = "maury.gmail.com";
+        IRepositorioUsuario repository = new RepositorioUsuario();
+        Servicio instance = new Servicio(repository);  
+        String expResult = "El correo debe contener el carácter '@'.";
+        String result = instance.validarCorreoInstitucional(correo);
+        assertEquals(expResult, result);
+        
+    }
+    
+    @Test
+    public void testValidarCorreoInstitucional3() {
+        System.out.println("Validar correo institucional fallido, correo vacío.");
+        String correo = "";
+        IRepositorioUsuario repository = new RepositorioUsuario();
+        Servicio instance = new Servicio(repository);  
+        String expResult = "El correo no puede estar vacío.";
+        String result = instance.validarCorreoInstitucional(correo);
+        assertEquals(expResult, result);
+        
+    }
 }

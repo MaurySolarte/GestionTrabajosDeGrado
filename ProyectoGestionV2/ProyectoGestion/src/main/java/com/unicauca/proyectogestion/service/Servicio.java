@@ -34,10 +34,14 @@ public class Servicio {
     }
     
     public Usuario obtenerUsuarioPorEmail(String email){
-        
+
         Usuario usuario = repositorio.obtenerUsuarioPorEmail(email);
-        
+
         return usuario;        
+    }
+    
+    public String obtenerRolUsuario(String email) {
+        return repositorio.obtenerRolUsuario(email);
     }
     
     public String validarContrasenaSegura(String contrasena){

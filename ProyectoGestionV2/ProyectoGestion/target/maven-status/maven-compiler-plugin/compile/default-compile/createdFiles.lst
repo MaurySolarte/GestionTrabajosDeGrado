@@ -1,6 +1,7 @@
 com\unicauca\proyectogestion\RegisterController.class
 com\unicauca\proyectogestion\domain\Usuario.class
 com\unicauca\proyectogestion\LoginController.class
+com\unicauca\proyectogestion\DashboardEstudianteController.class
 com\unicauca\proyectogestion\access\IRepositorioUsuario.class
 com\unicauca\proyectogestion\service\Servicio.class
 com\unicauca\proyectogestion\domain\EnumRoles.class

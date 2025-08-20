@@ -16,7 +16,7 @@ public class ProyectoGestion {
         IRepositorioUsuario repository = new RepositorioUsuario();        
         
         try{
-        Usuario newUser = new Usuario("Yo", "yo", 321, EnumProgramas.Ingeniería_de_Sistemas, EnumRoles.Docente, "a@tumama", "12345");                       
+        Usuario newUser = new Usuario("Yo", "yo", "321", EnumProgramas.Ingeniería_de_Sistemas, EnumRoles.Docente, "a@tumama", "12345");                       
         
         
         repository.registrarUsuario(newUser);
