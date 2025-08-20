@@ -100,7 +100,7 @@ public class RegisterController implements Initializable {
                         
         if(validarCamposVacios() == false){
             capturarDatosUsuario();
-            if(validarContrasenia()){
+            if(validarContrasenia() && validarCorreo()){
             registrarUsuario();
             }
         }        
@@ -181,6 +181,16 @@ public class RegisterController implements Initializable {
         }
         else{            
             mostrarAlerta("Contraseña Incorrecta", servicio.validarContrasenaSegura(nuevoUsuario.getContrasenia()), Alert.AlertType.ERROR);
+            return false;
+        }
+    }
+    
+    private boolean validarCorreo(){
+        if(servicio.validarCorreoInstitucional(nuevoUsuario.getEmail()) == "OK"){
+            return true;
+        }
+        else{
+            mostrarAlerta("Contraseña Incorrecta", servicio.validarCorreoInstitucional(nuevoUsuario.getEmail()), Alert.AlertType.ERROR);
             return false;
         }
     }

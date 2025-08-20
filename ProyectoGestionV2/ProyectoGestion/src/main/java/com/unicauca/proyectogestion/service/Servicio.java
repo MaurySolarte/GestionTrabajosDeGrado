@@ -33,7 +33,14 @@ public class Servicio {
         return 0;
     }
     
-    public String validarContrasenaSegura(String contrasena) {
+    public Usuario obtenerUsuarioPorEmail(String email){
+        
+        Usuario usuario = repositorio.obtenerUsuarioPorEmail(email);
+        
+        return usuario;        
+    }
+    
+    public String validarContrasenaSegura(String contrasena){
         if (contrasena.length() < 6) {
             return "La contraseña debe tener al menos 6 caracteres.";
         }
@@ -48,4 +55,24 @@ public class Servicio {
         }
     return "OK";
     }
+    
+    public String validarCorreoInstitucional(String correo) {
+        if (correo == null || correo.trim().isEmpty()) {
+            return "El correo no puede estar vacío.";
+        }
+
+        // Verifica que tenga al menos un @
+        if (!correo.contains("@")) {
+            return "El correo debe contener el carácter '@'.";
+        }
+
+        // Verifica que termine con el dominio institucional
+        if (!correo.endsWith("@unicauca.edu.co")) {
+            return "El correo debe pertenecer al dominio @unicauca.edu.co.";
+        }
+
+        return "OK";
+    }
+    
+
 }

@@ -24,7 +24,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {                        
         Navegacion.setStage(stage);
-        Navegacion.cambiarVista("register");             
+        Navegacion.cambiarVista("login");             
         stage.show();  
     }
 

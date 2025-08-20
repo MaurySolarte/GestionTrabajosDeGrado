@@ -13,25 +13,27 @@ import java.util.Map;
 import java.util.ServiceConfigurationError;
 
 public class Navegacion{
-    private static final Map<String, Parent> vistas = new HashMap<>();
-    private static Stage stage;
+   private static final Map<String, Parent> vistas = new HashMap<>();
+   private static final Map<String, Object> controladores = new HashMap<>();
+   private static Stage stage;
 
-    // Inicializa el stage principal desde App
     public static void setStage(Stage mainStage) {
         stage = mainStage;
     }
 
-    // Carga y guarda las vistas solo la primera vez
+    
     private static Parent loadFXML(String fxml) throws IOException {
         if (!vistas.containsKey(fxml)) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Navegacion.class.getResource("/com/unicauca/proyectogestion/" + fxml + ".fxml"));
-            
-            vistas.put(fxml, fxmlLoader.load());
+            FXMLLoader fxmlLoader = new FXMLLoader(Navegacion.class.getResource(
+                    "/com/unicauca/proyectogestion/" + fxml + ".fxml"
+            ));
+            Parent root = fxmlLoader.load();
+            vistas.put(fxml, root);
+            controladores.put(fxml, fxmlLoader.getController()); 
         }
         return vistas.get(fxml);
     }
 
-    // Cambia de escena
     public static void cambiarVista(String nombre) {
         try {
             Parent root = loadFXML(nombre);
@@ -43,5 +45,11 @@ public class Navegacion{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    public static <T> T getController(String nombre) {
+        return (T) controladores.get(nombre);
     }
 }

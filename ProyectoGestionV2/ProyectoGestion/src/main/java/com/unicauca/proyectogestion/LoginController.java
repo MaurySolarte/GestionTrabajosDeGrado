@@ -1,7 +1,10 @@
 
 package com.unicauca.proyectogestion;
 
+import com.unicauca.proyectogestion.access.Gestion;
+import com.unicauca.proyectogestion.access.IRepositorioUsuario;
 import com.unicauca.proyectogestion.access.RepositorioUsuario;
+import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.service.Servicio;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import javafx.scene.control.Button;
@@ -35,20 +38,22 @@ public class LoginController implements Initializable {
     @FXML
     private Label lbl_registrarse;
     
+    private Servicio service;
+    
     @FXML
     private void evenBtnIngresar(ActionEvent event){
-    String usuario = txt_usuario.getText();
-    String contrasenia = txt_contrasenia.getText();
+    String correo = txt_usuario.getText();
+    String contrasenia = txt_contrasenia.getText();       
 
-    RepositorioUsuario repo = new RepositorioUsuario();
-    Servicio service = new Servicio(repo);
-
-    int valido = service.iniciarSesion(usuario, contrasenia);
+    int valido = service.iniciarSesion(correo, contrasenia);
 
         switch (valido) {
             case 1:
-                mostrarAlerta("Login exitoso", "Bienvenido " + usuario, Alert.AlertType.CONFIRMATION);
-                // Aquí puedes abrir otra ventana, por ejemplo la pantalla principal
+                Usuario objUsuario = service.obtenerUsuarioPorEmail(correo); 
+                mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
+                Navegacion.cambiarVista("dashboardProfesor");
+                DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");                               
+                controlador.setUsuario(objUsuario);
                 break;
             case 2:
                 mostrarAlerta("Error de login", "Por favor llene todos los campos requeridos para iniciar sesion", Alert.AlertType.INFORMATION);
@@ -102,7 +107,8 @@ public class LoginController implements Initializable {
      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        IRepositorioUsuario repositorio = Gestion.getInstancia().obtenerRepositorio("SQLite");       
+        service = new Servicio(repositorio);
     }    
     
 }

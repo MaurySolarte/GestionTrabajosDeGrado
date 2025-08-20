@@ -82,6 +82,33 @@ public class RepositorioUsuario implements IRepositorioUsuario{
         return false;
     }
     
+     public Usuario obtenerUsuarioPorEmail(String email) {
+        String sql = "SELECT * FROM Usuario WHERE email = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:./ProyectoGestionDB.db");
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, email);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Usuario(
+                            rs.getString("nombres"),
+                            rs.getString("apellidos"),
+                            rs.getInt("celular"),
+                            EnumProgramas.valueOf(rs.getString("programa")), // depende de tu enum
+                            EnumRoles.valueOf(rs.getString("rol")),
+                            rs.getString("email"),
+                            null
+                    );
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null; // si no lo encuentra
+    }
+    
     private void initDatabase() {
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS Usuario (\n"

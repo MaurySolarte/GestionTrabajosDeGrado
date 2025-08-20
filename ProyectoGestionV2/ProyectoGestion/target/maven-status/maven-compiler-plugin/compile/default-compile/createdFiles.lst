@@ -8,5 +8,6 @@ com\unicauca\proyectogestion\access\Gestion.class
 com\unicauca\proyectogestion\App.class
 com\unicauca\proyectogestion\maintest\ProyectoGestion.class
 com\unicauca\proyectogestion\utilities\Navegacion.class
+com\unicauca\proyectogestion\DashboardProfesorController.class
 com\unicauca\proyectogestion\access\RepositorioUsuario.class
 com\unicauca\proyectogestion\domain\EnumProgramas.class
