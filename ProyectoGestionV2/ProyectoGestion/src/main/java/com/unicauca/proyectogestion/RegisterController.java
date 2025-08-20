@@ -5,6 +5,7 @@ import com.unicauca.proyectogestion.access.Gestion;
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
 import com.unicauca.proyectogestion.domain.*;
 import com.unicauca.proyectogestion.service.*;
+import com.unicauca.proyectogestion.utilities.Navegacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +27,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javax.swing.JOptionPane;
 
@@ -63,6 +65,7 @@ public class RegisterController implements Initializable {
     //Gestion gestion = new Gestion();
     //IRepositorioUsuario repositorio = null;
     private Usuario nuevoUsuario = null;
+    
     private Servicio servicio = null;
     
     @Override
@@ -82,16 +85,14 @@ public class RegisterController implements Initializable {
                     txtCelular.setText(newValue.replaceAll("[^\\d]", "")); 
                 }
             }
-        );
+        );                       
         
-        //repositorio = gestion.obtenerRepositorio("SQLite");        
-        //servicio = new Servicio(repositorio);        
+        IRepositorioUsuario repositorio = Gestion.getInstancia().obtenerRepositorio("SQLite");
+        servicio = new Servicio(repositorio);
+        
     }  
 
-    public void setServicio(IRepositorioUsuario repositorio) {
-        servicio = new Servicio(repositorio);
-    }
-
+ 
     
     
     @FXML
@@ -233,6 +234,10 @@ public class RegisterController implements Initializable {
             this.chbxEstudiante.setSelected(false);
         }
     }
-        
+     
+     @FXML
+    void eventClicklblVolver(MouseEvent event) {
+         Navegacion.cambiarVista("login");
+    }
     
 }

@@ -11,6 +11,8 @@ public class Servicio {
     public Servicio(IRepositorioUsuario repositorio) {
         this.repositorio = repositorio;
     }
+
+          
     
     public boolean registrarUsuario(Usuario nuevoUsuario) throws SQLException{
         
@@ -21,8 +23,14 @@ public class Servicio {
         return repositorio.registrarUsuario(nuevoUsuario); 
     }
     
-    public boolean iniciarSesion(Usuario usuario){
-        return false;
+    public int iniciarSesion(String email, String contrasenia){
+        
+        if (email == null || email.isEmpty() || contrasenia == null || contrasenia.isEmpty()){
+        return 2;}
+        else if (repositorio.iniciarSesion(email, contrasenia)){
+        return 1;}
+        else 
+        return 0;
     }
     
     public String validarContrasenaSegura(String contrasena) {
@@ -39,5 +47,5 @@ public class Servicio {
             return "La contraseña debe contener al menos un carácter especial.";
         }
     return "OK";
-}
+    }
 }

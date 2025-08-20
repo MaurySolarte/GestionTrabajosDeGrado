@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public interface IRepositorioUsuario {
     
-    boolean iniciarSesion(Usuario usuario);
+    boolean iniciarSesion(String email, String contrasenia);
     boolean registrarUsuario(Usuario nuevoUsuario) throws SQLException;
     
 }

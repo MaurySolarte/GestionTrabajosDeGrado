@@ -9,15 +9,13 @@ public class Gestion {
     public Gestion() {
     }     
     
-    public Gestion getInstancia() {
+    public static Gestion getInstancia() {
         if (instancia == null){
             instancia = new Gestion();
         }
         return instancia;
     }
-    
-    
-    
+            
     public IRepositorioUsuario obtenerRepositorio(String tipo){
         
         IRepositorioUsuario repositorio = null;

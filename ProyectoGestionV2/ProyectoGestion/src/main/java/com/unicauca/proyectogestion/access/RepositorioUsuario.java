@@ -65,23 +65,20 @@ public class RepositorioUsuario implements IRepositorioUsuario{
         return false;
     }
     
-    public boolean iniciarSesion(Usuario usuario){
-        
-        try{
+    public boolean iniciarSesion(String email, String contrasenia) {
+        try {
             String sql = "SELECT contrasena FROM Usuario WHERE email = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, usuario.getEmail());
+            pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
-            
-            if(rs.next()){
-                String contrasenaHash = rs.getString("contrasena");                
-                return BCrypt.checkpw(usuario.getContrasenia(), contrasenaHash);
+
+            if (rs.next()) {
+                String contrasenaHash = rs.getString("contrasena");
+                return BCrypt.checkpw(contrasenia, contrasenaHash);
             }
-            
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
-        }            
-        
+        }
         return false;
     }
     
