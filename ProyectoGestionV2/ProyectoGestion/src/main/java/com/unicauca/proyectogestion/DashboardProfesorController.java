@@ -6,14 +6,18 @@ package com.unicauca.proyectogestion;
 
 import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.utilities.Navegacion;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -22,45 +26,44 @@ import javafx.scene.control.TextField;
  */
 public class DashboardProfesorController implements Initializable {
 
-     @FXML
+    @FXML
+    private AnchorPane achrPnCentral;
+
+    @FXML
+    private Button btn_cerrarSesion;
+
+    @FXML
     private Label lblNombre;
-    @FXML
-    private TextField txtNombres;
-    @FXML
-    private TextField txtCelular;
-    @FXML
-    private TextField txtRol;
-    @FXML
-    private TextField txtApellidos;
-    @FXML
-    private TextField txtPrograma;
-    @FXML
-    private TextField txtEmail;
-    
+
     private Usuario usuario;
+
+    @FXML
+    private void mostrarMisDatos() throws IOException {
+        ProfesorMisDatosController controlador
+                = Navegacion.cargarEnAnchorPane(achrPnCentral, "ProfesorMisDatos");
+
+        if (controlador != null) {
+            controlador.setUsuario(this.usuario);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }   
-    
-    public void cargarUsuario(){
-        txtNombres.setText(usuario.getNombres());
-        lblNombre.setText(usuario.getNombres() +" "+ usuario.getApellidos());
-        txtApellidos.setText(usuario.getApellidos());
-        txtCelular.setText(usuario.getCelular());
-        txtEmail.setText(usuario.getEmail());
-        txtPrograma.setText(String.valueOf(usuario.getPrograma()));
-        txtRol.setText(String.valueOf(usuario.getRol()));
+
+    }
+
+    public void cargarUsuario() {
+        lblNombre.setText(usuario.getNombres() + " " + usuario.getApellidos());
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
         cargarUsuario();
     }
-    
-     @FXML
+
+    @FXML
     void eventBtnCerrarSesion(ActionEvent event) {
-         Navegacion.cambiarVista("login");
+        Navegacion.cambiarVista("login");
     }
-    
+
 }
