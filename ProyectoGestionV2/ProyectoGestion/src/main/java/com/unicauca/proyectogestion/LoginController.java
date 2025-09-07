@@ -1,4 +1,3 @@
-
 package com.unicauca.proyectogestion;
 
 import com.unicauca.proyectogestion.access.Gestion;
@@ -37,37 +36,37 @@ public class LoginController implements Initializable {
     private Button btn_ingresar;
     @FXML
     private Label lbl_registrarse;
-    
-    private Servicio service;
-    
-    @FXML
-    private void evenBtnIngresar(ActionEvent event){
-    String correo = txt_usuario.getText();
-    String contrasenia = txt_contrasenia.getText();       
 
-    int valido = service.iniciarSesion(correo, contrasenia);
+    private Servicio service;
+
+    @FXML
+    private void evenBtnIngresar(ActionEvent event) {
+        String correo = txt_usuario.getText();
+        String contrasenia = txt_contrasenia.getText();
+
+        int valido = service.iniciarSesion(correo, contrasenia);
 
         switch (valido) {
             case 1:
-                Usuario objUsuario = service.obtenerUsuarioPorEmail(correo);                                                 
+                Usuario objUsuario = service.obtenerUsuarioPorEmail(correo);
                 String rol = service.obtenerRolUsuario(correo);
 
                 if ("Docente".equalsIgnoreCase(rol)) {
                     mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
                     Navegacion.cambiarVista("dashboardProfesor");
-                    DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");                               
-                    controlador.setUsuario(objUsuario);                
+                    DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");
+                    controlador.setUsuario(objUsuario);
                 } else if ("Estudiante".equalsIgnoreCase(rol)) {
-                    mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);                    
+                    mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
                     Navegacion.cambiarVista("dashboardEstudiante");
-                    DashboardEstudianteController controlador = Navegacion.getController("dashboardEstudiante");                               
-                    controlador.setUsuario(objUsuario);                
-                    
+                    DashboardEstudianteController controlador = Navegacion.getController("dashboardEstudiante");
+                    controlador.setUsuario(objUsuario);
+
                 } else {
                     mostrarAlerta("Error", "No se pudo determinar el rol del usuario", Alert.AlertType.ERROR);
                 }
                 break;
-                
+
             case 2:
                 mostrarAlerta("Error de login", "Por favor llene todos los campos requeridos para iniciar sesion", Alert.AlertType.INFORMATION);
                 break;
@@ -75,53 +74,53 @@ public class LoginController implements Initializable {
                 mostrarAlerta("Error de login", "Usuario o contraseña incorrectos", Alert.AlertType.ERROR);
                 break;
         }
-        
+
     }
-    
+
     @FXML
-    private void evenBtnRegistrarse(javafx.scene.input.MouseEvent event){
-        Navegacion.cambiarVista("register"); 
+    private void evenBtnRegistrarse(javafx.scene.input.MouseEvent event) {
+        Navegacion.cambiarVista("register");
     }
-    
-     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
-    Alert alerta = new Alert(tipo);
 
-    // Cambiar título e ícono de ventana
-    alerta.setTitle(titulo);
-    alerta.setHeaderText(null);
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
 
-    // Crear un Label personalizado para el mensaje
-    Label etiqueta = new Label(mensaje);
-    etiqueta.setWrapText(true);
-    etiqueta.setStyle("-fx-font-Tebuchet MS: 14px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;");
+        // Cambiar título e ícono de ventana
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
 
-    // Meter el Label en un contenedor para darle padding
-    VBox contenedor = new VBox(etiqueta);
-    contenedor.setSpacing(10);
-    contenedor.setPadding(new Insets(10));
+        // Crear un Label personalizado para el mensaje
+        Label etiqueta = new Label(mensaje);
+        etiqueta.setWrapText(true);
+        etiqueta.setStyle("-fx-font-Tebuchet MS: 14px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;");
 
-    alerta.getDialogPane().setContent(contenedor);
+        // Meter el Label en un contenedor para darle padding
+        VBox contenedor = new VBox(etiqueta);
+        contenedor.setSpacing(10);
+        contenedor.setPadding(new Insets(10));
 
-    // Aplicar estilo al cuadro de diálogo completo
-    alerta.getDialogPane().setStyle(
-        "-fx-background-color: #f9f9f9; " +
-        "-fx-border-color: #ABBEF6; " +
-        "-fx-border-width: 3px; " +
-        "-fx-border-radius: 5px; " +
-        "-fx-background-radius: 5px;"
-    );
+        alerta.getDialogPane().setContent(contenedor);
 
-    // Cambiar estilo de los botones
-    alerta.getDialogPane().lookupButton(ButtonType.OK)
-          .setStyle("-fx-background-color: #1E2C9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7px;");
+        // Aplicar estilo al cuadro de diálogo completo
+        alerta.getDialogPane().setStyle(
+                "-fx-background-color: #f9f9f9; "
+                + "-fx-border-color: #ABBEF6; "
+                + "-fx-border-width: 3px; "
+                + "-fx-border-radius: 5px; "
+                + "-fx-background-radius: 5px;"
+        );
 
-    alerta.showAndWait();
-}
-     
+        // Cambiar estilo de los botones
+        alerta.getDialogPane().lookupButton(ButtonType.OK)
+                .setStyle("-fx-background-color: #1E2C9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7px;");
+
+        alerta.showAndWait();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        IRepositorioUsuario repositorio = Gestion.getInstancia().obtenerRepositorio("SQLite");       
+        IRepositorioUsuario repositorio = Gestion.getInstancia().obtenerRepositorio("SQLite");
         service = new Servicio(repositorio);
-    }    
-    
+    }
+
 }
