@@ -1,7 +1,5 @@
 package com.unicauca.proyectogestion.utilities;
 
-import com.unicauca.proyectogestion.RegisterController;
-import com.unicauca.proyectogestion.access.IRepositorioUsuario;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,7 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ServiceConfigurationError;
+
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 

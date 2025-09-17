@@ -1,5 +1,5 @@
 
-package com.unicauca.proyectogestion;
+package com.unicauca.proyectogestion.controllers;
 
 import com.unicauca.proyectogestion.access.Gestion;
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
@@ -17,19 +17,12 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.fxml.Initializable;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javax.swing.JOptionPane;
 
 public class RegisterController implements Initializable {
 

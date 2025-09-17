@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="560.0" prefWidth="698.0" styleClass="center-pane" stylesheets="@dashboardprofesor.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="560.0" prefWidth="698.0" styleClass="center-pane" stylesheets="@dashboardprofesor.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unicauca.proyectogestion.controllers.ProfesorSubirFormatoController">
    <children>
       <HBox layoutX="82.0" layoutY="63.0" prefHeight="472.0" styleClass="info-pane" stylesheets="@dashboardprofesor.css">
          <children>
@@ -37,12 +38,12 @@
                         </HBox>
                         <HBox>
                            <children>
-                              <TextField alignment="TOP_LEFT" editable="false" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
+                              <TextField fx:id="txtTitulo" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
                                  <HBox.margin>
                                     <Insets left="30.0" top="10.0" />
                                  </HBox.margin>
                                  <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
+                                    <Cursor fx:constant="TEXT" />
                                  </cursor>
                               </TextField>
                            </children>
@@ -65,12 +66,12 @@
                         </HBox>
                         <HBox>
                            <children>
-                              <TextField alignment="TOP_LEFT" editable="false" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
+                              <TextField fx:id="txtObjetivoGeneral" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
                                  <HBox.margin>
                                     <Insets left="30.0" top="10.0" />
                                  </HBox.margin>
                                  <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
+                                    <Cursor fx:constant="TEXT" />
                                  </cursor>
                               </TextField>
                            </children>
@@ -93,35 +94,67 @@
                         </HBox>
                         <HBox>
                            <children>
-                              <TextField alignment="TOP_LEFT" editable="false" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
+                              <TextArea fx:id="txtObjetivoEspecifico" prefHeight="100.0" prefWidth="200.0">
                                  <HBox.margin>
                                     <Insets left="30.0" top="10.0" />
                                  </HBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </TextField>
+                              </TextArea>
                            </children>
                         </HBox>
                         <HBox>
                            <children>
-                              <ImageView fitHeight="99.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/archivo.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets left="100.0" top="50.0" />
-                                 </HBox.margin>
-                              </ImageView>
+                              <HBox>
+                                 <children>
+                                    <ImageView fx:id="imgFormato" fitHeight="99.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/archivo.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="50.0" top="50.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <ImageView fx:id="imgCarta" fitHeight="99.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/archivo.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="50.0" top="50.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
                            </children>
                         </HBox>
                         <HBox>
                            <children>
-                              <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Subir Formato A" textAlignment="CENTER">
-                                 <HBox.margin>
-                                    <Insets left="95.0" top="10.0" />
-                                 </HBox.margin>
-                              </Button>
+                              <HBox>
+                                 <children>
+                                    <Button fx:id="btnFormato" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Subir Formato A" textAlignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets left="40.0" top="10.0" />
+                                       </HBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="10.0">
+                                 <children>
+                                    <Button fx:id="btnCarta" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Subir Carta Empresa" textAlignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets left="30.0" top="10.0" />
+                                       </HBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                         </HBox>
                      </children>
@@ -146,19 +179,19 @@
                         </HBox>
                         <HBox>
                            <children>
-                              <TextField alignment="TOP_LEFT" editable="false" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
+                              <TextField fx:id="txtDirector" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
                                  <HBox.margin>
                                     <Insets left="30.0" top="10.0" />
                                  </HBox.margin>
                                  <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
+                                    <Cursor fx:constant="TEXT" />
                                  </cursor>
                               </TextField>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox layoutX="11.0" layoutY="11.0" prefWidth="100.0">
+                  <VBox prefWidth="100.0">
                      <children>
                         <HBox>
                            <children>
@@ -174,12 +207,40 @@
                         </HBox>
                         <HBox>
                            <children>
-                              <TextField alignment="TOP_LEFT" editable="false" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
+                              <TextField fx:id="txtCodirector" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
                                  <HBox.margin>
                                     <Insets left="30.0" top="10.0" />
                                  </HBox.margin>
                                  <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="11.0" layoutY="11.0" prefWidth="100.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label text="Correo estudiante">
+                                 <HBox.margin>
+                                    <Insets left="30.0" top="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <TextField fx:id="txtCorreo" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="200.0" styleClass="text-field-info" stylesheets="@dashboardprofesor.css">
+                                 <HBox.margin>
+                                    <Insets left="30.0" top="10.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
                                  </cursor>
                               </TextField>
                            </children>
@@ -204,12 +265,18 @@
                            <children>
                               <VBox>
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="Proyecto Investigación">
+                                    <RadioButton fx:id="rdBtnPI" mnemonicParsing="false" onAction="#eventClickRdBtnPI" text="Proyecto Investigación">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
                                     </RadioButton>
-                                    <RadioButton mnemonicParsing="false" text="Práctica Profesional" />
+                                    <RadioButton fx:id="rdBtnPP" mnemonicParsing="false" onAction="#eventClickRdBtnPP" text="Práctica Profesional">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></RadioButton>
                                  </children>
                                  <padding>
                                     <Insets bottom="20.0" left="30.0" top="15.0" />
@@ -227,7 +294,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <DatePicker prefHeight="25.0" prefWidth="148.0">
+                              <DatePicker fx:id="dtPckrFecha" prefHeight="25.0" prefWidth="148.0">
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
                                  </HBox.margin>
@@ -238,8 +305,11 @@
                            <children>
                               <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Subir" textAlignment="CENTER">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" left="225.0" top="125.0" />
+                                    <Insets bottom="10.0" left="225.0" top="100.0" />
                                  </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                            </children>
                         </HBox>

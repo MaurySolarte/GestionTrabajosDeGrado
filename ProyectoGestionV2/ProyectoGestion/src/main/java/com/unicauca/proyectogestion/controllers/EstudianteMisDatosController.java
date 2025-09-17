@@ -1,14 +1,19 @@
-package com.unicauca.proyectogestion;
+package com.unicauca.proyectogestion.controllers;
 
 import com.unicauca.proyectogestion.domain.Usuario;
+import javafx.fxml.Initializable;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
-public class ProfesorMisDatosController implements Initializable {
-    
+public class EstudianteMisDatosController implements Initializable {
+
+    @FXML
+    private AnchorPane anchrPaneCentral;
+
     @FXML
     private TextField txtApellidos;
 
@@ -26,16 +31,25 @@ public class ProfesorMisDatosController implements Initializable {
 
     @FXML
     private TextField txtRol;
-    
-    
+
     private Usuario usuario;
-    
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
-    
-    public void cargarUsuario(){
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    public void inicializarUsuario(Usuario usuario){
+        setUsuario(usuario);
+        cargarUsuario();
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+
+    }
+
+    private void cargarUsuario(){
         txtNombres.setText(usuario.getNombres());
         txtApellidos.setText(usuario.getApellidos());
         txtCelular.setText(usuario.getCelular());
@@ -43,10 +57,4 @@ public class ProfesorMisDatosController implements Initializable {
         txtPrograma.setText(String.valueOf(usuario.getPrograma()));
         txtRol.setText(String.valueOf(usuario.getRol()));
     }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-        cargarUsuario();
-    }
-    
 }

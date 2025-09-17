@@ -2,9 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.unicauca.proyectogestion;
+package com.unicauca.proyectogestion.controllers;
 
-import com.unicauca.proyectogestion.*;
 import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import java.net.URL;
@@ -15,51 +14,67 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 public class DashboardEstudianteController implements Initializable {
 
     @FXML
-    private Label lblNombre;
+    private AnchorPane anchrPaneCentral;
+
     @FXML
     private Button btn_cerrarSesion;
+
     @FXML
-    private TextField txtNombres;
+    private HBox hboxMiProyecto;
+
     @FXML
-    private TextField txtCelular;
+    private HBox hboxMisDatos;
+
     @FXML
-    private TextField txtRol;
-    @FXML
-    private TextField txtApellidos;
-    @FXML
-    private TextField txtPrograma;
-    @FXML
-    private TextField txtEmail;
+    private Label lblNombre;
     
     private Usuario usuario;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-    }    
+    }
+
+    public void inicializarUsuario(Usuario usuario){
+        setUsuario(usuario);
+        cargarUsuario();
+    }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-        cargarUsuario();
+
     }
     
     private void cargarUsuario(){
-        txtNombres.setText(usuario.getNombres());
+
         lblNombre.setText(usuario.getNombres() +" "+ usuario.getApellidos());
-        txtApellidos.setText(usuario.getApellidos());
-        txtCelular.setText(usuario.getCelular());
-        txtEmail.setText(usuario.getEmail());
-        txtPrograma.setText(String.valueOf(usuario.getPrograma()));
-        txtRol.setText(String.valueOf(usuario.getRol()));
+
     }
 
     @FXML
     private void eventBtnCerrarSesion(ActionEvent event) {
         Navegacion.cambiarVista("login");
+    }
+
+    @FXML
+    void mostrarMisDatos(MouseEvent event) {
+        EstudianteMisDatosController controlador = Navegacion.cargarEnAnchorPane(anchrPaneCentral, "EstudianteMisDatos");
+        controlador.inicializarUsuario(usuario);
+    }
+
+    @FXML
+    void mostrarMiProyecto(MouseEvent event) {
+        EstudianteSeguimientoProyectoController controlador =
+                Navegacion.cargarEnAnchorPane(anchrPaneCentral,"EstudianteSeguimientoProyecto");
+
+
     }
     
 }

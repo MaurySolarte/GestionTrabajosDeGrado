@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package com.unicauca.proyectogestion;
+package com.unicauca.proyectogestion.controllers;
 
 import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.utilities.Navegacion;
@@ -11,12 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -30,35 +26,40 @@ public class DashboardProfesorController implements Initializable {
     private AnchorPane achrPnCentral;
 
     @FXML
-    private Button btn_cerrarSesion;
-
-    @FXML
     private Label lblNombre;
 
     private Usuario usuario;
 
     @FXML
     private void mostrarMisDatos() throws IOException {
-        ProfesorMisDatosController controlador
-                = Navegacion.cargarEnAnchorPane(achrPnCentral, "ProfesorMisDatos");
+        misDatosController controlador
+                = Navegacion.cargarEnAnchorPane(achrPnCentral, "misDatos");
 
         if (controlador != null) {
             controlador.setUsuario(this.usuario);
         }
     }
-
+    
+    @FXML
+    private void mostrarSubirFormato() {
+        ProfesorSubirFormatoController controlador
+                = Navegacion.cargarEnAnchorPane(achrPnCentral, "ProfesorSubirFormato");
+                
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }
 
     public void cargarUsuario() {
         lblNombre.setText(usuario.getNombres() + " " + usuario.getApellidos());
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Usuario usuario) throws IOException {
         this.usuario = usuario;
         cargarUsuario();
+        mostrarMisDatos();
     }
 
     @FXML

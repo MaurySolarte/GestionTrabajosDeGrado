@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unicauca.proyectogestion.DashboardProfesorController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unicauca.proyectogestion.controllers.DashboardProfesorController">
    <left>
       <AnchorPane prefHeight="571.0" prefWidth="219.0" styleClass="sidebar" stylesheets="@dashboardprofesor.css" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="40.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/perfil%20(1).png" />
+                  <Image url="@images/perfil (1).png" />
                </image>
             </ImageView>
             <Label fx:id="lblNombre" layoutX="79.0" layoutY="176.0" text="Nombre" textAlignment="CENTER" textFill="WHITE">
@@ -48,7 +48,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER" layoutY="306.0" prefHeight="55.0" prefWidth="234.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
+            <HBox fx:id="bxSubirFormato" alignment="CENTER" layoutY="306.0" onMouseClicked="#mostrarSubirFormato" prefHeight="55.0" prefWidth="234.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
                <children>
                   <Label text="Subir Formato A" textAlignment="CENTER" textFill="WHITE">
                      <font>
