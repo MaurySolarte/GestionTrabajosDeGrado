@@ -6,6 +6,7 @@ import com.unicauca.proyectogestion.access.RepositorioUsuario;
 import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.service.Servicio;
 import com.unicauca.proyectogestion.utilities.Navegacion;
+import java.io.IOException;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
@@ -40,7 +41,7 @@ public class LoginController implements Initializable {
     private Servicio service;
 
     @FXML
-    private void evenBtnIngresar(ActionEvent event) {
+    private void evenBtnIngresar(ActionEvent event) throws IOException {
         String correo = txt_usuario.getText();
         String contrasenia = txt_contrasenia.getText();
 
@@ -53,8 +54,10 @@ public class LoginController implements Initializable {
 
                 if ("Docente".equalsIgnoreCase(rol)) {
                     mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
-                    Navegacion.cambiarVista("dashboardProfesor");
-                    DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");
+                    Navegacion.cambiarVista("dashboardCoordinador");
+                    //Navegacion.cambiarVista("dashboardProfesor");
+                    //DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");
+                    DashboardCoordinadorController controlador = Navegacion.getController("dashboardCoordinador");
                     controlador.setUsuario(objUsuario);
                 } else if ("Estudiante".equalsIgnoreCase(rol)) {
                     mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);

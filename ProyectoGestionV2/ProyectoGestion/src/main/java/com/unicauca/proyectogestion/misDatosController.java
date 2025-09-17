@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
-public class ProfesorMisDatosController implements Initializable {
+public class misDatosController implements Initializable {
     
     @FXML
     private TextField txtApellidos;
