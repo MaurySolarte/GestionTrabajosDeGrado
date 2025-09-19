@@ -1,7 +1,15 @@
 package com.unicauca.proyectogestion.service;
 
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
+import com.unicauca.proyectogestion.domain.FormatoA;
+import com.unicauca.proyectogestion.domain.FormatoAInvestigacion;
 import com.unicauca.proyectogestion.domain.Usuario;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Servicio {
@@ -77,6 +85,10 @@ public class Servicio {
 
         return "OK";
     }
-    
+
+    public void guardarArchivoEnBD(File fileFormato, File fileCarta, String tipo, FormatoA formato) {
+        repositorio.guardarArchivoEnBD(fileFormato,fileCarta, tipo, formato);
+    }
+
 
 }

@@ -64,8 +64,8 @@ public class DashboardEstudianteController implements Initializable {
     }
 
     @FXML
-    void mostrarMisDatos(MouseEvent event) {
-        EstudianteMisDatosController controlador = Navegacion.cargarEnAnchorPane(anchrPaneCentral, "EstudianteMisDatos");
+    void mostrarMisDatos() {
+        misDatosController controlador = Navegacion.cargarEnAnchorPane(anchrPaneCentral, "misDatos");
         controlador.inicializarUsuario(usuario);
     }
 

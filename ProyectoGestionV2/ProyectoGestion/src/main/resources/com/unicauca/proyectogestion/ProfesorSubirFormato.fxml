@@ -133,7 +133,7 @@
                            <children>
                               <HBox>
                                  <children>
-                                    <Button fx:id="btnFormato" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Subir Formato A" textAlignment="CENTER">
+                                    <Button fx:id="btnFormato" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#eventClickBtnFormato" text="Subir Formato A" textAlignment="CENTER">
                                        <HBox.margin>
                                           <Insets left="40.0" top="10.0" />
                                        </HBox.margin>
@@ -145,7 +145,7 @@
                               </HBox>
                               <HBox layoutX="10.0" layoutY="10.0">
                                  <children>
-                                    <Button fx:id="btnCarta" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Subir Carta Empresa" textAlignment="CENTER">
+                                    <Button fx:id="btnCarta" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#eventClickBtnCarta" text="Subir Carta Empresa" textAlignment="CENTER">
                                        <HBox.margin>
                                           <Insets left="30.0" top="10.0" />
                                        </HBox.margin>
@@ -303,7 +303,7 @@
                         </HBox>
                         <HBox>
                            <children>
-                              <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Subir" textAlignment="CENTER">
+                              <Button fx:id="btnSubir" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#eventClickBtnSubir" text="Subir" textAlignment="CENTER">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="225.0" top="100.0" />
                                  </HBox.margin>

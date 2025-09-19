@@ -44,6 +44,7 @@ public class DashboardProfesorController implements Initializable {
     private void mostrarSubirFormato() {
         ProfesorSubirFormatoController controlador
                 = Navegacion.cargarEnAnchorPane(achrPnCentral, "ProfesorSubirFormato");
+        controlador.setUsuario(usuario);
                 
     }
     

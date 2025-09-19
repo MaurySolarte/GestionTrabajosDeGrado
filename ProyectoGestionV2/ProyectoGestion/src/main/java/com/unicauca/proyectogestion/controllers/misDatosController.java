@@ -33,8 +33,13 @@ public class misDatosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
-    
+    }
+
+    public void inicializarUsuario(Usuario usuario){
+        setUsuario(usuario);
+        cargarUsuario();
+    }
+
     public void cargarUsuario(){
         txtNombres.setText(usuario.getNombres());
         txtApellidos.setText(usuario.getApellidos());

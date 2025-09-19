@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unicauca.proyectogestion.controllers.DashboardEstudianteController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unicauca.proyectogestion.controllers.DashboardEstudianteController">
    <left>
-      <AnchorPane prefHeight="571.0" prefWidth="206.0" styleClass="sidebar" stylesheets="@dashboardprofesor.css" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="571.0" prefWidth="219.0" styleClass="sidebar" stylesheets="@dashboardprofesor.css" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="40.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -72,6 +72,6 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane fx:id="anchrPaneCentral" prefHeight="571.0" prefWidth="797.0" styleClass="center-pane" stylesheets="@dashboardprofesor.css" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="anchrPaneCentral" prefHeight="560.0" prefWidth="698.0" styleClass="center-pane" stylesheets="@dashboardprofesor.css" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

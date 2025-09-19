@@ -2,6 +2,9 @@ package com.unicauca.proyectogestion.access;
 
 import com.unicauca.proyectogestion.domain.*;
 import com.unicauca.proyectogestion.service.Servicio;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,30 +26,59 @@ public class RepositorioUsuario implements IRepositorioUsuario {
     @Override
     public boolean registrarUsuario(Usuario nuevoUsuario) throws SQLException {
         String contrasenaHash = BCrypt.hashpw(nuevoUsuario.getContrasenia(), BCrypt.gensalt());
-        String sql = "INSERT INTO Usuario VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sqlUsuario = "INSERT INTO Usuario (nombres, apellidos, celular, programa, rol, email, contrasena) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL)) {
             if (buscarEmail(conn, nuevoUsuario.getEmail())) {
-                return false;
+                return false; // ya existe el correo
             }
 
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            // Usamos RETURN_GENERATED_KEYS para obtener el id autoincremental
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, nuevoUsuario.getNombres());
                 pstmt.setString(2, nuevoUsuario.getApellidos());
-                pstmt.setString(3, nuevoUsuario.getCelular()); // sigue siendo double
+                pstmt.setString(3, nuevoUsuario.getCelular());
                 pstmt.setString(4, nuevoUsuario.getPrograma().toString());
                 pstmt.setString(5, nuevoUsuario.getRol().toString());
                 pstmt.setString(6, nuevoUsuario.getEmail());
                 pstmt.setString(7, contrasenaHash);
+
                 pstmt.executeUpdate();
+
+                // Recuperamos el ID generado
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int idUsuario = rs.getInt(1);
+
+                        // Dependiendo del rol, insertamos en Estudiante o Profesor
+                        if (nuevoUsuario.getRol().toString().equals("Estudiante")) {
+                            System.out.println("Estudiante registrado");
+                            String sqlEst = "INSERT INTO Estudiante (id_usuario) VALUES (?)";
+                            try (PreparedStatement pstmtEst = conn.prepareStatement(sqlEst)) {
+                                pstmtEst.setInt(1, idUsuario);
+                                pstmtEst.executeUpdate();
+                            }
+                        } else if (nuevoUsuario.getRol().toString().equals("Profesor")) {
+                            System.out.println("Profesor registrado");
+                            String sqlProf = "INSERT INTO Profesor (id_usuario) VALUES (?)";
+                            try (PreparedStatement pstmtProf = conn.prepareStatement(sqlProf)) {
+                                pstmtProf.setInt(1, idUsuario);
+                                pstmtProf.executeUpdate();
+                            }
+                        }
+                    }
+                }
             }
-            System.out.println("Usuario registrado.");
+
+            System.out.println("Usuario registrado correctamente.");
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         }
     }
+
 
     public boolean buscarEmail(Connection conn, String email) throws SQLException {
         String sqlValidacion = "SELECT email FROM Usuario WHERE email = ?";
@@ -88,6 +120,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new Usuario(
+                            rs.getInt("id_usuario"),
                             rs.getString("nombres"),
                             rs.getString("apellidos"),
                             rs.getString("celular"),
@@ -95,6 +128,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                             EnumRoles.valueOf(rs.getString("rol")),
                             rs.getString("email"),
                             null
+
                     );
                 }
             }
@@ -103,7 +137,47 @@ public class RepositorioUsuario implements IRepositorioUsuario {
         }
         return null; 
     }
-    
+
+    @Override
+    public void guardarArchivoEnBD(File fileFormato, File fileCarta, String tipo, FormatoA formato) {
+        String sql = "";
+        if (tipo.equals("formato_a")) {
+            sql = "INSERT INTO FormatoAInvestigacion (titulo, modalidad, fecha_actual, director, codirector, correo_estudiante, id_profesor, objetivo_general, objetivos_especificos, archivo_proyecto) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        } else if (tipo.equals("carta_empresa")) {
+            sql = "INSERT INTO FormatoAPracticaProfesional (titulo, modalidad, fecha_actual, director, codirector, correo_estudiante, id_profesor, objetivo_general, objetivos_especificos, archivo_proyecto, carta_recomendacion) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        }
+
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:./ProyectoGestionDB.db");
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             FileInputStream fis = new FileInputStream(fileFormato);
+             FileInputStream fisCarta = (tipo.equals("carta_empresa") && fileCarta != null) ? new FileInputStream(fileCarta) : null) {
+
+            pstmt.setString(1, formato.getTitulo());
+            pstmt.setString(2, formato.getModalidad().toString());
+            pstmt.setString(3, formato.getFechaActual().toString());
+            pstmt.setString(4, formato.getDirector());
+            pstmt.setString(5, formato.getCodirector());
+            pstmt.setString(6, formato.getCorreoEstudiante());
+            pstmt.setInt(7, formato.getIdProfesor());
+            pstmt.setString(8, formato.getObjetivoGeneral());
+            pstmt.setString(9, formato.getObjetivosEspecificos());
+            pstmt.setBinaryStream(10, fis, (int) fileFormato.length());
+
+            if (tipo.equals("carta_empresa")) {
+                pstmt.setBinaryStream(11, fisCarta, (int) fileCarta.length());
+            }
+
+            pstmt.executeUpdate();
+            System.out.println("Archivo guardado correctamente en la BD.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public boolean iniciarSesion(String email, String contrasenia) {
         String sql = "SELECT contrasena FROM Usuario WHERE email = ?";
@@ -126,20 +200,76 @@ public class RepositorioUsuario implements IRepositorioUsuario {
 
     private void initDatabase() {
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS Usuario (\n"
-                + "	nombres text NOT NULL,\n"
-                + "	apellidos text NOT NULL,\n"
-                + "	celular text,\n" // lo dejo como REAL
-                + "	programa text NOT NULL CHECK (programa IN ('Ingeniería_de_Sistemas', 'Ingeniería_Electrónica_y_Telecomunicaciones', 'Automática_industrial', 'Tecnología_en_Telemática')),\n"
-                + "	rol text NOT NULL CHECK (rol IN ('Docente', 'Estudiante')),\n"
-                + "	email text PRIMARY KEY,\n"
-                + "	contrasena text NOT NULL \n"                 
+        String sqlUsuario = "CREATE TABLE IF NOT EXISTS Usuario (\n"
+                + " id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                + " nombres TEXT NOT NULL,\n"
+                + " apellidos TEXT NOT NULL,\n"
+                + " celular TEXT,\n"
+                + " programa TEXT NOT NULL CHECK (programa IN ('Ingeniería_de_Sistemas', 'Ingeniería_Electrónica_y_Telecomunicaciones', 'Automática_industrial', 'Tecnología_en_Telemática')),\n"
+                + " rol TEXT NOT NULL CHECK (rol IN ('Estudiante', 'Profesor', 'Coordinador')),\n"
+                + " email TEXT UNIQUE NOT NULL,\n"
+                + " contrasena TEXT NOT NULL\n"
+                + ");";
+
+        String sqlEstudiante = "CREATE TABLE IF NOT EXISTS Estudiante (\n"
+                + " id_usuario INTEGER PRIMARY KEY,\n"
+                + " estado_proyecto TEXT DEFAULT 'No inscrito',\n"
+                + " FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE\n"
+                + ");";
+
+        String sqlProfesor = "CREATE TABLE IF NOT EXISTS Profesor (\n"
+                + " id_usuario INTEGER PRIMARY KEY,\n"
+                + " area_investigacion TEXT,\n"
+                + " FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE\n"
+                + ");";
+
+        String sqlCoordinador = "CREATE TABLE IF NOT EXISTS Coordinador (\n"
+                + " id_usuario INTEGER PRIMARY KEY,\n"
+                + " facultad TEXT,\n"
+                + " FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE\n"
+                + ");";
+
+        String sqlFormatoAInv = "CREATE TABLE IF NOT EXISTS FormatoAInvestigacion (\n"
+                + " id_formato INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                + " titulo TEXT NOT NULL,\n"
+                + " modalidad TEXT CHECK (modalidad IN ('Investigación',  'Practica Profesional')),\n"
+                + " fecha_actual TEXT NOT NULL,\n"
+                + " director TEXT,\n"
+                + " codirector TEXT,\n"
+                + " correo_estudiante TEXT NOT NULL,\n"
+                + " id_profesor INTEGER NOT NULL,\n"
+                + " objetivo_general TEXT,\n"
+                + " objetivos_especificos TEXT,\n"
+                + " archivo_proyecto BLOB,\n"
+                + " FOREIGN KEY (correo_estudiante) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
+                + " FOREIGN KEY (id_profesor) REFERENCES Profesor(id_usuario) ON DELETE CASCADE\n"
+                + ");";
+
+        String sqlFormatoAPas = "CREATE TABLE IF NOT EXISTS FormatoAPracticaProfesional (\n"
+                + " id_formato INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                + " titulo TEXT NOT NULL,\n"
+                + " modalidad TEXT CHECK (modalidad IN ('Investigación', 'Practica Profesional')),\n"
+                + " fecha_actual TEXT NOT NULL,\n"
+                + " director TEXT,\n"
+                + " codirector TEXT,\n"
+                + " correo_estudiante TEXT NOT NULL,\n"
+                + " id_profesor INTEGER NOT NULL,\n"
+                + " objetivo_general TEXT,\n"
+                + " objetivos_especificos TEXT,\n"
+                + " archivo_proyecto BLOB,\n"
+                + " carta_recomendacion BLOB,\n"
+                + " FOREIGN KEY (correo_estudiante) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
+                + " FOREIGN KEY (id_profesor) REFERENCES Profesor(id_usuario) ON DELETE CASCADE\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
-
+            stmt.execute(sqlUsuario);
+            stmt.execute(sqlEstudiante);
+            stmt.execute(sqlProfesor);
+            stmt.execute(sqlCoordinador);
+            stmt.execute(sqlFormatoAInv);
+            stmt.execute(sqlFormatoAPas);
         } catch (SQLException ex) {
             Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
         }

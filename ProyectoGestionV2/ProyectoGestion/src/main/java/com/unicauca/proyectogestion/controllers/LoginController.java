@@ -51,19 +51,17 @@ public class LoginController implements Initializable {
                 Usuario objUsuario = service.obtenerUsuarioPorEmail(correo);
                 String rol = service.obtenerRolUsuario(correo);
 
-                if ("Docente".equalsIgnoreCase(rol)) {
+                if ("Profesor".equalsIgnoreCase(rol)) {
                     mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
-                    Navegacion.cambiarVista("dashboardCoordinador");
-                    //Navegacion.cambiarVista("dashboardProfesor");
-                    //DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");
-                    DashboardCoordinadorController controlador = Navegacion.getController("dashboardCoordinador");
+                    Navegacion.cambiarVista("dashboardProfesor");
+                    DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");
                     controlador.setUsuario(objUsuario);
                 } else if ("Estudiante".equalsIgnoreCase(rol)) {
                     mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
                     Navegacion.cambiarVista("dashboardEstudiante");
                     DashboardEstudianteController controlador = Navegacion.getController("dashboardEstudiante");
                     controlador.inicializarUsuario(objUsuario);
-
+                    controlador.mostrarMisDatos();
 
                 } else {
                     mostrarAlerta("Error", "No se pudo determinar el rol del usuario", Alert.AlertType.ERROR);
@@ -95,7 +93,7 @@ public class LoginController implements Initializable {
         // Crear un Label personalizado para el mensaje
         Label etiqueta = new Label(mensaje);
         etiqueta.setWrapText(true);
-        etiqueta.setStyle("-fx-font-Tebuchet MS: 14px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;");
+        etiqueta.setStyle("-fx-font-Tebuchet: MS 14px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;");
 
         // Meter el Label en un contenedor para darle padding
         VBox contenedor = new VBox(etiqueta);

@@ -1,6 +1,7 @@
 package com.unicauca.proyectogestion.domain;
 
 public class Usuario {
+    private int idUsuario;
     private String nombres;
     private String apellidos;    
     private String celular;
@@ -9,7 +10,8 @@ public class Usuario {
     private String email;    
     private String contrasenia;    
 
-    public Usuario(String nombres, String apellidos, String celular, EnumProgramas programa, EnumRoles rol, String email, String contrasenia) {
+    public Usuario(int idUsuario, String nombres, String apellidos, String celular, EnumProgramas programa, EnumRoles rol, String email, String contrasenia) {
+        this.idUsuario = idUsuario;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.celular = celular;
@@ -18,7 +20,22 @@ public class Usuario {
         this.email = email;
         this.contrasenia = contrasenia;
     }
-        
+
+    public Usuario(String nombres, String apellidos, String celular, EnumProgramas programa, EnumRoles rol, String email, String contrasenia) {
+        this.idUsuario = idUsuario;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.celular = celular;
+        this.programa = programa;
+        this.rol = rol;
+        this.email = email;
+        this.contrasenia = contrasenia;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
     public String getNombres() {
         return nombres;
     }
