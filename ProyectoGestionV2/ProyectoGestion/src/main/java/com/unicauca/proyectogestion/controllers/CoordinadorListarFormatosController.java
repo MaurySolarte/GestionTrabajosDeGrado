@@ -1,8 +1,10 @@
 package com.unicauca.proyectogestion.controllers;
 
-import com.unicauca.proyectogestion.access.Gestion;
+import com.unicauca.proyectogestion.access.Factory;
+import com.unicauca.proyectogestion.access.IRepositorioFormatoA;
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
-import com.unicauca.proyectogestion.service.Servicio;
+import com.unicauca.proyectogestion.service.ServicioFormatoA;
+import com.unicauca.proyectogestion.service.ServicioUsuario;
 import com.unicauca.proyectogestion.utilities.FormatoATabla;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import javafx.collections.FXCollections;
@@ -12,8 +14,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CoordinadorListarFormatosController {
 
@@ -30,37 +34,40 @@ public class CoordinadorListarFormatosController {
     private TableView<FormatoATabla> tblFormatos;
 
     @FXML
-    private TableColumn<FormatoATabla, String> colCorreo;
+    private TableColumn<FormatoATabla, String> correoEstudiante;
 
     @FXML
-    private TableColumn<FormatoATabla, String> colDirector;
+    private TableColumn<FormatoATabla, String> director;
 
     @FXML
-    private TableColumn<FormatoATabla, String> colTipoProyecto;
+    private TableColumn<FormatoATabla, String> tipoDeProyecto;
 
     @FXML
-    private TableColumn<FormatoATabla, String> colEvaluado;
+    private TableColumn<FormatoATabla, String> evaluado;
 
     @FXML
-    private TableColumn<FormatoATabla, Void> colEvaluar;
+    private TableColumn<FormatoATabla, Void> evaluar;
 
     @FXML
     private TextField txtBuscar;
-    private Servicio servicio = null;
+    private ServicioUsuario servicioUsuario = null;
+    private ServicioFormatoA servicioFormatoA = null;
 
     @FXML
     public void initialize() {
 
-        IRepositorioUsuario repositorio = Gestion.getInstancia().obtenerRepositorio("SQLite");
-        servicio = new Servicio(repositorio);
+        IRepositorioUsuario repositorioUsuario = Factory.getInstancia().obtenerRepositorioUsuario("SQLite");
+        IRepositorioFormatoA repositorioFormatoA = Factory.getInstancia().obtenerRepositorioFormatoA("SQLite");
+        servicioUsuario = new ServicioUsuario(repositorioUsuario);
+        servicioFormatoA = new ServicioFormatoA(repositorioFormatoA);
 
-        colCorreo.setCellValueFactory(new PropertyValueFactory<>("correoEstudiante"));
-        colDirector.setCellValueFactory(new PropertyValueFactory<>("director"));
-        colTipoProyecto.setCellValueFactory(new PropertyValueFactory<>("tipoProyecto"));
-        colEvaluado.setCellValueFactory(new PropertyValueFactory<>("evaluado"));
+        correoEstudiante.setCellValueFactory(new PropertyValueFactory<>("correoEstudiante"));
+        director.setCellValueFactory(new PropertyValueFactory<>("director"));
+        tipoDeProyecto.setCellValueFactory(new PropertyValueFactory<>("tipoProyecto"));
+        evaluado.setCellValueFactory(new PropertyValueFactory<>("evaluado"));
 
         // Agregar botón Evaluar
-        colEvaluar.setCellFactory(param -> new TableCell<>() {
+        evaluar.setCellFactory(param -> new TableCell<>() {
             private final Label btn = new Label("Evaluar");
 
             {
@@ -83,24 +90,28 @@ public class CoordinadorListarFormatosController {
         });
 
         cargarFormatos();
-    }
-/*
-    private List<FormatoATabla> filtrarPorCorreo(List<FormatoATabla> lista, String correoFiltro) {
-        return lista.stream()
-                .filter(f -> f.getCorreoEstudiante().toLowerCase().contains(correoFiltro.toLowerCase()))
-                .toList();
+
+
     }
 
- */
+    private List<FormatoATabla> filtrarPorCorreo(List<FormatoATabla> lista, String correoFiltro) {
+        return lista.stream()
+                .filter(f -> f.getCorreoEstudiante().toLowerCase().contains(correoFiltro.toLowerCase())).collect(Collectors.toList());
+    }
+
+
     private void cargarFormatos() {
-        List<FormatoATabla> formatos = servicio.obtenerFormatos();
+        List<FormatoATabla> formatos = servicioFormatoA.obtenerFormatos();
         ObservableList<FormatoATabla> data = FXCollections.observableArrayList(formatos);
         tblFormatos.setItems(data);
     }
 
     private void abrirVentanaEvaluar(FormatoATabla formato) {
         System.out.println("Evaluando proyecto de: " + formato.getCorreoEstudiante());
-        Navegacion.cambiarVista("CoordinadorEvaluarFormatoController");
+        DashboardCoordinadorController controlador = Navegacion.getController("dashboardCoordinador");
+        AnchorPane anchorPaneCentral = controlador.getAchrPane();
+        Navegacion.cargarEnAnchorPane(anchorPaneCentral, "CoordinadorEvaluarFormato");
+
     }
 
     @FXML
@@ -110,12 +121,12 @@ public class CoordinadorListarFormatosController {
 
     @FXML
     void buscarEstudiante(MouseEvent event) {
-        /*
+
         String correoBuscado = txtBuscar.getText().trim();
-        List<FormatoATabla> todos = servicio.obtenerFormatos();
+        List<FormatoATabla> todos = servicioFormatoA.obtenerFormatos();
         List<FormatoATabla> filtrados = filtrarPorCorreo(todos, correoBuscado);
         tblFormatos.setItems(FXCollections.observableArrayList(filtrados));
 
-         */
+
     }
 }

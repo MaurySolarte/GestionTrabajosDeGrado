@@ -1,13 +1,7 @@
 package com.unicauca.proyectogestion.maintest;
 
-import com.unicauca.proyectogestion.access.Gestion;
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
 import com.unicauca.proyectogestion.access.RepositorioUsuario;
-import com.unicauca.proyectogestion.domain.EnumProgramas;
-import com.unicauca.proyectogestion.domain.EnumRoles;
-import com.unicauca.proyectogestion.domain.Usuario;
-import com.unicauca.proyectogestion.service.Servicio;
-import java.sql.SQLException;
 
 public class ProyectoGestion {
 

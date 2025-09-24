@@ -1,10 +1,7 @@
 package com.unicauca.proyectogestion.access;
 
 import com.unicauca.proyectogestion.domain.*;
-import com.unicauca.proyectogestion.service.Servicio;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.unicauca.proyectogestion.service.ServicioUsuario;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class RepositorioUsuario implements IRepositorioUsuario {
@@ -52,6 +51,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
                         int idUsuario = rs.getInt(1);
+                        String programa = nuevoUsuario.getPrograma().toString();
 
                         // Dependiendo del rol, insertamos en Estudiante o Profesor
                         if (nuevoUsuario.getRol().toString().equals("Estudiante")) {
@@ -68,6 +68,14 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                                 pstmtProf.setInt(1, idUsuario);
                                 pstmtProf.executeUpdate();
                             }
+                        } else {
+                            System.out.println("Coordinador registrado");
+                            String sqlProf = "INSERT INTO Coordinador (id_usuario, facultad) VALUES (?, ?)";
+                            try (PreparedStatement pstmtProf = conn.prepareStatement(sqlProf)) {
+                                pstmtProf.setInt(1, idUsuario);
+                                pstmtProf.setString(2, programa);
+                                pstmtProf.executeUpdate();
+                            }
                         }
                     }
                 }
@@ -76,7 +84,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
             System.out.println("Usuario registrado correctamente.");
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         }
     }
@@ -106,7 +114,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
             }
         }
     } catch (SQLException ex) {
-        Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
     }
     return null; // Si no existe el usuario
 }
@@ -116,28 +124,80 @@ public class RepositorioUsuario implements IRepositorioUsuario {
 
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:./ProyectoGestionDB.db");
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+
             pstmt.setString(1, email);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return new Usuario(
-                            rs.getInt("id_usuario"),
-                            rs.getString("nombres"),
-                            rs.getString("apellidos"),
-                            rs.getString("celular"),
-                            EnumProgramas.valueOf(rs.getString("programa")),
-                            EnumRoles.valueOf(rs.getString("rol")),
-                            rs.getString("email"),
-                            null
-
-                    );
+                    String rol = rs.getString("rol");
+                    if ("Estudiante".equals(rol)) {
+                        // Consultar estado_proyecto de Estudiante
+                        String sqlEst = "SELECT estado_proyecto FROM Estudiante WHERE id_usuario = ?";
+                        try (PreparedStatement pstmtEst = conn.prepareStatement(sqlEst)) {
+                            pstmtEst.setInt(1, rs.getInt("id_usuario"));
+                            try (ResultSet rsEst = pstmtEst.executeQuery()) {
+                                String estadoProyecto = rsEst.next() ? rsEst.getString("estado_proyecto") : null;
+                                return new Estudiante(
+                                        rs.getInt("id_usuario"),
+                                        rs.getString("nombres"),
+                                        rs.getString("apellidos"),
+                                        rs.getString("celular"),
+                                        EnumProgramas.valueOf(rs.getString("programa")),
+                                        EnumRoles.valueOf(rol),
+                                        rs.getString("email"),
+                                        null,
+                                        estadoProyecto
+                                );
+                            }
+                        }
+                    } else if ("Profesor".equals(rol)) {
+                        // Consultar area_investigacion de Profesor
+                        String sqlProf = "SELECT area_investigacion FROM Profesor WHERE id_usuario = ?";
+                        try (PreparedStatement pstmtProf = conn.prepareStatement(sqlProf)) {
+                            pstmtProf.setInt(1, rs.getInt("id_usuario"));
+                            try (ResultSet rsProf = pstmtProf.executeQuery()) {
+                                String areaInvestigacion = rsProf.next() ? rsProf.getString("area_investigacion") : null;
+                                return new Profesor(
+                                        rs.getInt("id_usuario"),
+                                        rs.getString("nombres"),
+                                        rs.getString("apellidos"),
+                                        rs.getString("celular"),
+                                        EnumProgramas.valueOf(rs.getString("programa")),
+                                        EnumRoles.valueOf(rol),
+                                        rs.getString("email"),
+                                        null,
+                                        areaInvestigacion
+                                );
+                            }
+                        }
+                    }
+                    else if ("Coordinador".equals(rol)) {
+                        // Consultar area_investigacion de Profesor
+                        String sqlCoord = "SELECT facultad  FROM Coordinador WHERE id_usuario = ?";
+                        try (PreparedStatement pstmtCoord = conn.prepareStatement(sqlCoord)) {
+                            pstmtCoord.setInt(1, rs.getInt("id_usuario"));
+                            try (ResultSet rsCoord = pstmtCoord.executeQuery()) {
+                                String facultad = rsCoord.next() ? rsCoord.getString("facultad") : null;
+                                return new Coordinador(
+                                        rs.getInt("id_usuario"),
+                                        rs.getString("nombres"),
+                                        rs.getString("apellidos"),
+                                        rs.getString("celular"),
+                                        EnumProgramas.valueOf(rs.getString("programa")),
+                                        EnumRoles.valueOf(rol),
+                                        rs.getString("email"),
+                                        null,
+                                        facultad
+                                );
+                            }
+                        }
+                    }
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null; 
+        return null;
     }
 
     @Override
@@ -155,7 +215,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -187,7 +247,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return profesores;
     }
@@ -219,7 +279,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -298,7 +358,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
             stmt.execute(sqlFormatoAInv);
             stmt.execute(sqlFormatoAPas);
         } catch (SQLException ex) {
-            Logger.getLogger(Servicio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

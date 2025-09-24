@@ -1,6 +1,5 @@
 package com.unicauca.proyectogestion.access;
 import com.unicauca.proyectogestion.domain.FormatoA;
-import com.unicauca.proyectogestion.service.Servicio;
 import com.unicauca.proyectogestion.utilities.FormatoATabla;
 
 import java.io.File;
@@ -8,8 +7,6 @@ import java.io.FileInputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class RepositorioFormatoA implements IRepositorioFormatoA {
 

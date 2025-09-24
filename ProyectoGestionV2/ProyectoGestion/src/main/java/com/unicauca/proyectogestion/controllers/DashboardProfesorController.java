@@ -4,6 +4,7 @@
  */
 package com.unicauca.proyectogestion.controllers;
 
+import com.unicauca.proyectogestion.domain.Profesor;
 import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import java.io.IOException;

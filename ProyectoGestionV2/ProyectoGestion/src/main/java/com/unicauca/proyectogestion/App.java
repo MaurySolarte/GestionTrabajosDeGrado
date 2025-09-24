@@ -1,9 +1,5 @@
 package com.unicauca.proyectogestion;
 
-import com.unicauca.proyectogestion.access.Gestion;
-import com.unicauca.proyectogestion.access.IRepositorioUsuario;
-import com.unicauca.proyectogestion.service.Servicio;
-import com.unicauca.proyectogestion.*;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

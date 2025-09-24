@@ -58,11 +58,11 @@
         </TextField>
         <TableView fx:id="tblFormatos" layoutX="91.0" layoutY="250.0" prefHeight="227.0" prefWidth="584.0" style="-fx-background-color: EEE9E9; -fx-background-radius: 0;">
             <columns>
-                <TableColumn prefWidth="124.800048828125" text="Correo Estudiante" />
-                <TableColumn prefWidth="136.80003356933594" text="Director" />
-                <TableColumn prefWidth="171.199951171875" text="Tipo de Proyecto" />
-                <TableColumn prefWidth="87.199951171875" text="Evaluado" />
-            <TableColumn prefWidth="124.800048828125" text="Evaluar" />
+                <TableColumn fx:id="correoEstudiante" prefWidth="124.800048828125" text="Correo Estudiante" />
+                <TableColumn fx:id="director" prefWidth="136.80003356933594" text="Director" />
+                <TableColumn fx:id="tipoDeProyecto" prefWidth="171.199951171875" text="Tipo de Proyecto" />
+                <TableColumn fx:id="evaluado" prefWidth="87.199951171875" text="Evaluado" />
+            <TableColumn fx:id="evaluar" prefWidth="124.800048828125" text="Evaluar" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

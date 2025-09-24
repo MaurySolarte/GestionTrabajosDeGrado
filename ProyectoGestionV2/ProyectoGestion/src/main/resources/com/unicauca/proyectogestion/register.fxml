@@ -71,12 +71,17 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <RadioButton fx:id="rdbDocente" layoutX="157.0" layoutY="264.0" mnemonicParsing="false" onAction="#eventClickcrdbDocente" text="Profesor">
+            <RadioButton fx:id="rdbDocente" layoutX="151.0" layoutY="264.0" mnemonicParsing="false" onAction="#eventClickcrdbDocente" text="Profesor">
                <font>
                   <Font size="17.0" />
                </font>
             </RadioButton>
             <RadioButton fx:id="rdbEstudiante" layoutX="27.0" layoutY="264.0" mnemonicParsing="false" onAction="#eventClickcrdbEstudiante" text="Estudiante">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="rdbCoordinador" layoutX="270.0" layoutY="264.0" mnemonicParsing="false" onAction="#eventClickcrdbCoordinador" text="Coordinador">
                <font>
                   <Font size="17.0" />
                </font>

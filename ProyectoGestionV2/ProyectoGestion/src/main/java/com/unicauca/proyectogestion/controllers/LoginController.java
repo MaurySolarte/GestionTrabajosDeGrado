@@ -1,9 +1,10 @@
 package com.unicauca.proyectogestion.controllers;
 
-import com.unicauca.proyectogestion.access.Gestion;
+import com.unicauca.proyectogestion.access.Factory;
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
 import com.unicauca.proyectogestion.domain.Usuario;
-import com.unicauca.proyectogestion.service.Servicio;
+import com.unicauca.proyectogestion.service.ServicioFormatoA;
+import com.unicauca.proyectogestion.service.ServicioUsuario;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import java.io.IOException;
 import javafx.scene.control.Button;
@@ -37,19 +38,20 @@ public class LoginController implements Initializable {
     @FXML
     private Label lbl_registrarse;
 
-    private Servicio service;
+    private ServicioFormatoA serviceFormato;
+    private ServicioUsuario serviceUsuario;
 
     @FXML
     private void evenBtnIngresar(ActionEvent event) throws IOException {
         String correo = txt_usuario.getText();
         String contrasenia = txt_contrasenia.getText();
 
-        int valido = service.iniciarSesion(correo, contrasenia);
+        int valido = serviceUsuario.iniciarSesion(correo, contrasenia);
 
         switch (valido) {
             case 1:
-                Usuario objUsuario = service.obtenerUsuarioPorEmail(correo);
-                String rol = service.obtenerRolUsuario(correo);
+                Usuario objUsuario = serviceUsuario.obtenerUsuarioPorEmail(correo);
+                String rol = serviceUsuario.obtenerRolUsuario(correo);
 
                 if ("Profesor".equalsIgnoreCase(rol)) {
                     mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
@@ -62,7 +64,12 @@ public class LoginController implements Initializable {
                     DashboardEstudianteController controlador = Navegacion.getController("dashboardEstudiante");
                     controlador.inicializarUsuario(objUsuario);
                     controlador.mostrarMisDatos();
-
+                }else if ("Coordinador".equalsIgnoreCase(rol)) {
+                    mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
+                    Navegacion.cambiarVista("dashboardCoordinador");
+                    DashboardCoordinadorController controlador = Navegacion.getController("dashboardCoordinador");
+                    controlador.inicializarUsuario(objUsuario);
+                    controlador.mostrarMisDatos();
                 } else {
                     mostrarAlerta("Error", "No se pudo determinar el rol del usuario", Alert.AlertType.ERROR);
                 }
@@ -120,8 +127,8 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        IRepositorioUsuario repositorio = Gestion.getInstancia().obtenerRepositorio("SQLite");
-        service = new Servicio(repositorio);
+        IRepositorioUsuario repositorio = Factory.getInstancia().obtenerRepositorioUsuario("SQLite");
+        serviceUsuario = new ServicioUsuario(repositorio);
     }
 
 }

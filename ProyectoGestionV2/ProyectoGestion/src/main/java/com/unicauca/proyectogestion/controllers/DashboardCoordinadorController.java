@@ -28,7 +28,7 @@ public class DashboardCoordinadorController implements Initializable {
     }
 
     @FXML
-    private void mostrarMisDatos() throws IOException {
+    void mostrarMisDatos() throws IOException {
         misDatosController controlador
                 = Navegacion.cargarEnAnchorPane(achrPnCentral, "misDatos");
 
@@ -43,18 +43,29 @@ public class DashboardCoordinadorController implements Initializable {
                 = Navegacion.cargarEnAnchorPane(achrPnCentral, "CoordinadorListarFormatos");
     }
 
-    public void cargarUsuario() {
-        lblNombre.setText(usuario.getNombres() + " " + usuario.getApellidos());
+    public void inicializarUsuario(Usuario usuario){
+        setUsuario(usuario);
+        cargarUsuario();
     }
 
-    public void setUsuario(Usuario usuario) throws IOException {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-        cargarUsuario();
-        mostrarMisDatos();
+
+    }
+
+    public AnchorPane getAchrPane(){
+        return this.achrPnCentral;
+    }
+
+    private void cargarUsuario(){
+
+        lblNombre.setText(usuario.getNombres() +" "+ usuario.getApellidos());
+
     }
 
     @FXML
     void eventBtnCerrarSesion(ActionEvent event) {
         Navegacion.cambiarVista("login");
     }
+
 }

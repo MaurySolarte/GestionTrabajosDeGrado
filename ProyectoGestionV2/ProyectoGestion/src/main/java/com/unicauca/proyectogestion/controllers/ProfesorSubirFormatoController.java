@@ -6,10 +6,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.unicauca.proyectogestion.access.Gestion;
+import com.unicauca.proyectogestion.access.Factory;
+import com.unicauca.proyectogestion.access.IRepositorioFormatoA;
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
 import com.unicauca.proyectogestion.domain.*;
-import com.unicauca.proyectogestion.service.Servicio;
+import com.unicauca.proyectogestion.service.ServicioFormatoA;
+import com.unicauca.proyectogestion.service.ServicioUsuario;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,7 +69,8 @@ public class ProfesorSubirFormatoController implements Initializable {
     @FXML
     private TextField txtTitulo;
 
-    private Servicio servicio = null;
+    private ServicioFormatoA servicioFormatoA = null;
+    private ServicioUsuario servicioUsuario = null;
     private Usuario usuario = null;
 
     private File archivoFormato = null;
@@ -78,11 +81,14 @@ public class ProfesorSubirFormatoController implements Initializable {
         this.imgCarta.setVisible(false);
         this.btnCarta.setVisible(false);
 
-        IRepositorioUsuario repositorio = Gestion.getInstancia().obtenerRepositorio("SQLite");
-        servicio = new Servicio(repositorio);
+        IRepositorioUsuario repositorio = Factory.getInstancia().obtenerRepositorioUsuario("SQLite");
+        servicioUsuario = new ServicioUsuario(repositorio);
+
+        IRepositorioFormatoA repositorioFormatoA = Factory.getInstancia().obtenerRepositorioFormatoA("SQLite");
+        servicioFormatoA = new ServicioFormatoA(repositorioFormatoA);
 
         // Cargar los profesores en los ComboBox
-        List<Profesor> profesores = servicio.listarProfesores();
+        List<Profesor> profesores = servicioUsuario.listarProfesores();
         cbxDirector.setItems(FXCollections.observableArrayList(profesores));
         cbxCodirector.setItems(FXCollections.observableArrayList(profesores));
     }
@@ -113,11 +119,11 @@ public class ProfesorSubirFormatoController implements Initializable {
     void eventClickBtnSubir() {
         if (rdBtnPI.isSelected() && archivoFormato != null) {
             System.out.println("Archivo seleccionado: " + archivoFormato.getAbsolutePath());
-            servicio.guardarArchivoEnBD(archivoFormato, null, "formato_a", capturarDatosFormato());
+            servicioFormatoA.guardarArchivoEnBD(archivoFormato, null, "formato_a", capturarDatosFormato());
         } else if (rdBtnPP.isSelected() && archivoFormato != null && archivoCarta != null) {
             System.out.println("Archivo seleccionado: " + archivoFormato.getAbsolutePath());
             System.out.println("Archivo seleccionado: " + archivoCarta.getAbsolutePath());
-            servicio.guardarArchivoEnBD(archivoFormato, archivoCarta, "carta_empresa", capturarDatosFormato());
+            servicioFormatoA.guardarArchivoEnBD(archivoFormato, archivoCarta, "carta_empresa", capturarDatosFormato());
         } else {
             System.out.println("No se seleccionó ningún archivo.");
         }
@@ -135,7 +141,7 @@ public class ProfesorSubirFormatoController implements Initializable {
         Profesor director = cbxDirector.getValue();
         Profesor codirector = cbxCodirector.getValue();
 
-        Estudiante estudiante = servicio.obtenerEstudiantePorCorreo(txtCorreo.getText());
+        Estudiante estudiante = servicioUsuario.obtenerEstudiantePorCorreo(txtCorreo.getText());
         String objetivoGeneral = txtObjetivoGeneral.getText();
         String objetivosEspecificos = txtObjetivoEspecifico.getText();
 

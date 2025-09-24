@@ -1,7 +1,7 @@
 
 package com.unicauca.proyectogestion.controllers;
 
-import com.unicauca.proyectogestion.access.Gestion;
+import com.unicauca.proyectogestion.access.Factory;
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
 import com.unicauca.proyectogestion.domain.*;
 import com.unicauca.proyectogestion.service.*;
@@ -31,6 +31,9 @@ public class RegisterController implements Initializable {
     private RadioButton rdbDocente;
 
     @FXML
+    private RadioButton rdbCoordinador;
+
+    @FXML
     private TextField txtApellidos;
 
     @FXML
@@ -50,11 +53,11 @@ public class RegisterController implements Initializable {
     
 
     //Variables globales de objetos que se usan en toda la clase.
-    //Gestion gestion = new Gestion();
+    //Factory gestion = new Factory();
     //IRepositorioUsuario repositorio = null;
     private Usuario nuevoUsuario = null;
     
-    private Servicio servicio = null;
+    private ServicioUsuario servicioUsuario = null;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,7 +67,6 @@ public class RegisterController implements Initializable {
             "Ingeniería electrónica y de telecomunicaciones",
             "Automática industrial",
             "Tecnología en telemática"
-            
             )                               
         );        
         
@@ -75,8 +77,8 @@ public class RegisterController implements Initializable {
             }
         );                       
         
-        IRepositorioUsuario repositorio = Gestion.getInstancia().obtenerRepositorio("SQLite");
-        servicio = new Servicio(repositorio);
+        IRepositorioUsuario repositorio = Factory.getInstancia().obtenerRepositorioUsuario("SQLite");
+        servicioUsuario = new ServicioUsuario(repositorio);
         
     }  
 
@@ -109,7 +111,7 @@ public class RegisterController implements Initializable {
         }else if(cbxPrograma.getValue() == null){            
             mostrarAlerta("Campos vacíos", "Por favor seleccione el programa al que pertenece.", Alert.AlertType.WARNING);
             return true;
-        }else if(rdbDocente.isSelected() == false && rdbEstudiante.isSelected() == false){
+        }else if(rdbDocente.isSelected() == false && rdbEstudiante.isSelected() == false && rdbCoordinador.isSelected() == false){
             mostrarAlerta("Por favor seleccione un rol.", "Campos vacíos", Alert.AlertType.WARNING);
             return true;
         }      
@@ -139,8 +141,10 @@ public class RegisterController implements Initializable {
         EnumRoles rol;
         if(rdbDocente.isSelected()){
             rol = EnumRoles.Profesor;
-        }else{
+        }else if (rdbEstudiante.isSelected()){
             rol = EnumRoles.Estudiante;
+        }else{
+            rol = EnumRoles.Coordinador;
         }
         
         nuevoUsuario = new Usuario(nombres, apellidos, celular, programa, rol, correo, contrasenia);
@@ -149,7 +153,7 @@ public class RegisterController implements Initializable {
     
     private void registrarUsuario(){
         try{        
-            if(servicio.registrarUsuario(nuevoUsuario)){                                
+            if(servicioUsuario.registrarUsuario(nuevoUsuario)){
                 mostrarAlerta("Cuenta creada", "Cuenta creada exitosamente", Alert.AlertType.INFORMATION);
             }
             else{                
@@ -161,21 +165,21 @@ public class RegisterController implements Initializable {
     }    
     
     private boolean validarContrasenia(){
-        if(servicio.validarContrasenaSegura(nuevoUsuario.getContrasenia()) == "OK"){                            
+        if(servicioUsuario.validarContrasenaSegura(nuevoUsuario.getContrasenia()) == "OK"){
             return true;
         }
         else{            
-            mostrarAlerta("Contraseña Incorrecta", servicio.validarContrasenaSegura(nuevoUsuario.getContrasenia()), Alert.AlertType.ERROR);
+            mostrarAlerta("Contraseña Incorrecta", servicioUsuario.validarContrasenaSegura(nuevoUsuario.getContrasenia()), Alert.AlertType.ERROR);
             return false;
         }
     }
     
     private boolean validarCorreo(){
-        if(servicio.validarCorreoInstitucional(nuevoUsuario.getEmail()) == "OK"){
+        if(servicioUsuario.validarCorreoInstitucional(nuevoUsuario.getEmail()) == "OK"){
             return true;
         }
         else{
-            mostrarAlerta("Contraseña Incorrecta", servicio.validarCorreoInstitucional(nuevoUsuario.getEmail()), Alert.AlertType.ERROR);
+            mostrarAlerta("Contraseña Incorrecta", servicioUsuario.validarCorreoInstitucional(nuevoUsuario.getEmail()), Alert.AlertType.ERROR);
             return false;
         }
     }
@@ -215,11 +219,11 @@ public class RegisterController implements Initializable {
         alerta.showAndWait();
     }
 
-    
     @FXML
     private void eventClickcrdbEstudiante(ActionEvent event) {
         if(rdbEstudiante.isSelected()){
             this.rdbDocente.setSelected(false);
+            this.rdbCoordinador.setSelected(false);
         }
     }
     
@@ -227,6 +231,15 @@ public class RegisterController implements Initializable {
     private void eventClickcrdbDocente(ActionEvent event) {
         if(rdbDocente.isSelected()){
             this.rdbEstudiante.setSelected(false);
+            this.rdbCoordinador.setSelected(false);
+        }
+    }
+
+    @FXML
+    private void eventClickcrdbCoordinador(ActionEvent event) {
+        if(rdbCoordinador.isSelected()){
+            this.rdbEstudiante.setSelected(false);
+            this.rdbDocente.setSelected(false);
         }
     }
      
