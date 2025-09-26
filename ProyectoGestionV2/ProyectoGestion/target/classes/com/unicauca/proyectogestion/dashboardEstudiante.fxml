@@ -49,13 +49,6 @@
                </cursor>
             </HBox>
             <HBox alignment="CENTER" layoutY="361.0" prefHeight="55.0" prefWidth="235.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
-               <children>
-                  <Label prefHeight="26.0" prefWidth="211.0" text="Ver Estado Trabajo de Grado" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-               </children>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

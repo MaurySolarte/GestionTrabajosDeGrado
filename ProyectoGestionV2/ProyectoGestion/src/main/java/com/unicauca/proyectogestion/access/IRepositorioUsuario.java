@@ -15,4 +15,5 @@ public interface IRepositorioUsuario {
     String obtenerRolUsuario(String email);
     List<Profesor> listarProfesores();
     Estudiante obtenerEstudiantePorCorreo(String email);
+    Usuario obtenerUsuarioPorCodigo(String codigo);
 }

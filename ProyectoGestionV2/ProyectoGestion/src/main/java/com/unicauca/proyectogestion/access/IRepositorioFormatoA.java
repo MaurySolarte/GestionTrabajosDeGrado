@@ -12,5 +12,10 @@ import java.util.List;
 public interface IRepositorioFormatoA {
 
     void guardarArchivoEnBD(File fileFormato, File fileCarta, String tipo, FormatoA formato);
-    public List<FormatoATabla> obtenerFormatos();
+    List<FormatoATabla> obtenerFormatos();
+    boolean actualizarEstadoFormato(int idFormato, String tipo, String nuevoEstado);
+    FormatoATabla obtenerFormatoPorCorreo(String correoBuscado);
+    byte[] obtenerArchivoFormatoA(int idFormato, String tipo);
+    FormatoATabla obtenerFormato(int idFormato);
+
 }

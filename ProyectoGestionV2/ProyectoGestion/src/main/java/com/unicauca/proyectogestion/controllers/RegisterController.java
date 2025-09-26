@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -97,22 +96,22 @@ public class RegisterController implements Initializable {
     private boolean validarCamposVacios(){        
         
         if(txtNombres.getText() == ""){                        
-            mostrarAlerta("Campos vacíos", "Por favor ingrese sus nombres.", Alert.AlertType.WARNING);
+            Navegacion.mostrarAlerta("Campos vacíos", "Por favor ingrese sus nombres.", Alert.AlertType.WARNING);
             return true;
-        }else if(txtApellidos.getText() == ""){            
-            mostrarAlerta("Campos vacíos", "Por favor ingrese sus apellidos.", Alert.AlertType.WARNING);
+        }else if(txtApellidos.getText() == ""){
+            Navegacion.mostrarAlerta("Campos vacíos", "Por favor ingrese sus apellidos.", Alert.AlertType.WARNING);
             return true;
-        }else if(txtCorreo.getText() == ""){            
-            mostrarAlerta("Campos vacíos", "Por favor ingrese un correo.", Alert.AlertType.WARNING);
+        }else if(txtCorreo.getText() == ""){
+            Navegacion. mostrarAlerta("Campos vacíos", "Por favor ingrese un correo.", Alert.AlertType.WARNING);
             return true;
-        }else if(txtContrasenia.getText() == ""){            
-            mostrarAlerta("Campos vacíos", "Por favor ingrese una contraseña.", Alert.AlertType.WARNING);
+        }else if(txtContrasenia.getText() == ""){
+            Navegacion.mostrarAlerta("Campos vacíos", "Por favor ingrese una contraseña.", Alert.AlertType.WARNING);
             return true;
-        }else if(cbxPrograma.getValue() == null){            
-            mostrarAlerta("Campos vacíos", "Por favor seleccione el programa al que pertenece.", Alert.AlertType.WARNING);
+        }else if(cbxPrograma.getValue() == null){
+            Navegacion.mostrarAlerta("Campos vacíos", "Por favor seleccione el programa al que pertenece.", Alert.AlertType.WARNING);
             return true;
         }else if(rdbDocente.isSelected() == false && rdbEstudiante.isSelected() == false && rdbCoordinador.isSelected() == false){
-            mostrarAlerta("Por favor seleccione un rol.", "Campos vacíos", Alert.AlertType.WARNING);
+            Navegacion.mostrarAlerta("Por favor seleccione un rol.", "Campos vacíos", Alert.AlertType.WARNING);
             return true;
         }      
         return false;
@@ -154,13 +153,14 @@ public class RegisterController implements Initializable {
     private void registrarUsuario(){
         try{        
             if(servicioUsuario.registrarUsuario(nuevoUsuario)){
-                mostrarAlerta("Cuenta creada", "Cuenta creada exitosamente", Alert.AlertType.INFORMATION);
+                Navegacion.mostrarAlerta("Cuenta creada", "Cuenta creada exitosamente", Alert.AlertType.INFORMATION);
+
             }
-            else{                
-                mostrarAlerta("Cuenta existente.", "Ya existe una cuenta registrada con ese correo.", Alert.AlertType.ERROR);
+            else{
+                Navegacion.mostrarAlerta("Cuenta existente.", "Ya existe una cuenta registrada con ese correo.", Alert.AlertType.ERROR);
             }
-        }catch(SQLException ex){            
-            mostrarAlerta("Error al crear cuenta.", ex.getMessage(), Alert.AlertType.ERROR);
+        }catch(SQLException ex){
+            Navegacion.mostrarAlerta("Error al crear cuenta.", ex.getMessage(), Alert.AlertType.ERROR);
         }
     }    
     
@@ -168,8 +168,8 @@ public class RegisterController implements Initializable {
         if(servicioUsuario.validarContrasenaSegura(nuevoUsuario.getContrasenia()) == "OK"){
             return true;
         }
-        else{            
-            mostrarAlerta("Contraseña Incorrecta", servicioUsuario.validarContrasenaSegura(nuevoUsuario.getContrasenia()), Alert.AlertType.ERROR);
+        else{
+            Navegacion.mostrarAlerta("Contraseña Incorrecta", servicioUsuario.validarContrasenaSegura(nuevoUsuario.getContrasenia()), Alert.AlertType.ERROR);
             return false;
         }
     }
@@ -179,44 +179,9 @@ public class RegisterController implements Initializable {
             return true;
         }
         else{
-            mostrarAlerta("Contraseña Incorrecta", servicioUsuario.validarCorreoInstitucional(nuevoUsuario.getEmail()), Alert.AlertType.ERROR);
+            Navegacion.mostrarAlerta("Contraseña Incorrecta", servicioUsuario.validarCorreoInstitucional(nuevoUsuario.getEmail()), Alert.AlertType.ERROR);
             return false;
         }
-    }
-    
-    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
-        Alert alerta = new Alert(tipo);
-
-        // Cambiar título e ícono de ventana
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-
-        // Crear un Label personalizado para el mensaje
-            Label etiqueta = new Label(mensaje);
-        etiqueta.setWrapText(true);
-        etiqueta.setStyle("-fx-font-Tebuchet: MS 14px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;");
-
-        // Meter el Label en un contenedor para darle padding
-            VBox contenedor = new VBox(etiqueta);
-        contenedor.setSpacing(10);
-        contenedor.setPadding(new Insets(10));
-
-        alerta.getDialogPane().setContent(contenedor);
-
-        // Aplicar estilo al cuadro de diálogo completo
-        alerta.getDialogPane().setStyle(
-            "-fx-background-color: #f9f9f9; " +
-            "-fx-border-color: #ABBEF6; " +
-            "-fx-border-width: 1px; " +
-            "-fx-border-radius: 5px; " +
-            "-fx-background-radius: 5px;"
-        );
-
-        // Cambiar estilo de los botones
-        alerta.getDialogPane().lookupButton(ButtonType.OK)
-              .setStyle("-fx-background-color: #1E2C9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7px;");
-
-        alerta.showAndWait();
     }
 
     @FXML

@@ -54,32 +54,32 @@ public class LoginController implements Initializable {
                 String rol = serviceUsuario.obtenerRolUsuario(correo);
 
                 if ("Profesor".equalsIgnoreCase(rol)) {
-                    mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
+                    Navegacion.mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
                     Navegacion.cambiarVista("dashboardProfesor");
                     DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");
                     controlador.setUsuario(objUsuario);
                 } else if ("Estudiante".equalsIgnoreCase(rol)) {
-                    mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
+                    Navegacion.mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
                     Navegacion.cambiarVista("dashboardEstudiante");
                     DashboardEstudianteController controlador = Navegacion.getController("dashboardEstudiante");
                     controlador.inicializarUsuario(objUsuario);
                     controlador.mostrarMisDatos();
                 }else if ("Coordinador".equalsIgnoreCase(rol)) {
-                    mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
+                    Navegacion.mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
                     Navegacion.cambiarVista("dashboardCoordinador");
                     DashboardCoordinadorController controlador = Navegacion.getController("dashboardCoordinador");
                     controlador.inicializarUsuario(objUsuario);
                     controlador.mostrarMisDatos();
                 } else {
-                    mostrarAlerta("Error", "No se pudo determinar el rol del usuario", Alert.AlertType.ERROR);
+                    Navegacion.mostrarAlerta("Error", "No se pudo determinar el rol del usuario", Alert.AlertType.ERROR);
                 }
                 break;
 
             case 2:
-                mostrarAlerta("Error de login", "Por favor llene todos los campos requeridos para iniciar sesion", Alert.AlertType.INFORMATION);
+                Navegacion.mostrarAlerta("Error de login", "Por favor llene todos los campos requeridos para iniciar sesion", Alert.AlertType.INFORMATION);
                 break;
             default:
-                mostrarAlerta("Error de login", "Usuario o contraseña incorrectos", Alert.AlertType.ERROR);
+                Navegacion.mostrarAlerta("Error de login", "Usuario o contraseña incorrectos", Alert.AlertType.ERROR);
                 break;
         }
 
@@ -88,41 +88,6 @@ public class LoginController implements Initializable {
     @FXML
     private void evenBtnRegistrarse(javafx.scene.input.MouseEvent event) {
         Navegacion.cambiarVista("register");
-    }
-
-    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
-        Alert alerta = new Alert(tipo);
-
-        // Cambiar título e ícono de ventana
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-
-        // Crear un Label personalizado para el mensaje
-        Label etiqueta = new Label(mensaje);
-        etiqueta.setWrapText(true);
-        etiqueta.setStyle("-fx-font-Tebuchet: MS 14px; -fx-font-family: 'Segoe UI'; -fx-text-fill: #2c3e50;");
-
-        // Meter el Label en un contenedor para darle padding
-        VBox contenedor = new VBox(etiqueta);
-        contenedor.setSpacing(10);
-        contenedor.setPadding(new Insets(10));
-
-        alerta.getDialogPane().setContent(contenedor);
-
-        // Aplicar estilo al cuadro de diálogo completo
-        alerta.getDialogPane().setStyle(
-                "-fx-background-color: #f9f9f9; "
-                + "-fx-border-color: #ABBEF6; "
-                + "-fx-border-width: 3px; "
-                + "-fx-border-radius: 5px; "
-                + "-fx-background-radius: 5px;"
-        );
-
-        // Cambiar estilo de los botones
-        alerta.getDialogPane().lookupButton(ButtonType.OK)
-                .setStyle("-fx-background-color: #1E2C9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7px;");
-
-        alerta.showAndWait();
     }
 
     @Override

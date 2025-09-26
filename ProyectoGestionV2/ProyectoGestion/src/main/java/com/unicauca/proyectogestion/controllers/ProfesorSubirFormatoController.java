@@ -100,7 +100,6 @@ public class ProfesorSubirFormatoController implements Initializable {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Archivos PDF", "*.pdf")
         );
-
         archivoFormato = fileChooser.showOpenDialog(btnFormato.getScene().getWindow());
     }
 

@@ -73,6 +73,7 @@ public class DashboardEstudianteController implements Initializable {
     void mostrarMiProyecto(MouseEvent event) {
         EstudianteSeguimientoProyectoController controlador =
                 Navegacion.cargarEnAnchorPane(anchrPaneCentral,"EstudianteSeguimientoProyecto");
+        controlador.inicializarUsuario(usuario);
 
 
     }

@@ -200,6 +200,87 @@ public class RepositorioUsuario implements IRepositorioUsuario {
         return null;
     }
 
+    public Usuario obtenerUsuarioPorCodigo(String codigo) {
+        String sql = "SELECT * FROM Usuario WHERE codigo = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:./ProyectoGestionDB.db");
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, codigo);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String rol = rs.getString("rol");
+                    if ("Estudiante".equals(rol)) {
+                        // Consultar estado_proyecto de Estudiante
+                        String sqlEst = "SELECT estado_proyecto FROM Estudiante WHERE id_usuario = ?";
+                        try (PreparedStatement pstmtEst = conn.prepareStatement(sqlEst)) {
+                            pstmtEst.setInt(1, rs.getInt("id_usuario"));
+                            try (ResultSet rsEst = pstmtEst.executeQuery()) {
+                                String estadoProyecto = rsEst.next() ? rsEst.getString("estado_proyecto") : null;
+                                return new Estudiante(
+                                        rs.getInt("id_usuario"),
+                                        rs.getString("nombres"),
+                                        rs.getString("apellidos"),
+                                        rs.getString("celular"),
+                                        EnumProgramas.valueOf(rs.getString("programa")),
+                                        EnumRoles.valueOf(rol),
+                                        rs.getString("email"),
+                                        null,
+                                        estadoProyecto
+                                );
+                            }
+                        }
+                    } else if ("Profesor".equals(rol)) {
+                        // Consultar area_investigacion de Profesor
+                        String sqlProf = "SELECT area_investigacion FROM Profesor WHERE id_usuario = ?";
+                        try (PreparedStatement pstmtProf = conn.prepareStatement(sqlProf)) {
+                            pstmtProf.setInt(1, rs.getInt("id_usuario"));
+                            try (ResultSet rsProf = pstmtProf.executeQuery()) {
+                                String areaInvestigacion = rsProf.next() ? rsProf.getString("area_investigacion") : null;
+                                return new Profesor(
+                                        rs.getInt("id_usuario"),
+                                        rs.getString("nombres"),
+                                        rs.getString("apellidos"),
+                                        rs.getString("celular"),
+                                        EnumProgramas.valueOf(rs.getString("programa")),
+                                        EnumRoles.valueOf(rol),
+                                        rs.getString("email"),
+                                        null,
+                                        areaInvestigacion
+                                );
+                            }
+                        }
+                    } else if ("Coordinador".equals(rol)) {
+                        // Consultar facultad de Coordinador
+                        String sqlCoord = "SELECT facultad FROM Coordinador WHERE id_usuario = ?";
+                        try (PreparedStatement pstmtCoord = conn.prepareStatement(sqlCoord)) {
+                            pstmtCoord.setInt(1, rs.getInt("id_usuario"));
+                            try (ResultSet rsCoord = pstmtCoord.executeQuery()) {
+                                String facultad = rsCoord.next() ? rsCoord.getString("facultad") : null;
+                                return new Coordinador(
+                                        rs.getInt("id_usuario"),
+                                        rs.getString("nombres"),
+                                        rs.getString("apellidos"),
+                                        rs.getString("celular"),
+                                        EnumProgramas.valueOf(rs.getString("programa")),
+                                        EnumRoles.valueOf(rol),
+                                        rs.getString("email"),
+                                        null,
+                                        facultad
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+
     @Override
     public boolean iniciarSesion(String email, String contrasenia) {
         String sql = "SELECT contrasena FROM Usuario WHERE email = ?";
@@ -300,9 +381,17 @@ public class RepositorioUsuario implements IRepositorioUsuario {
 
         String sqlEstudiante = "CREATE TABLE IF NOT EXISTS Estudiante (\n"
                 + " id_usuario INTEGER PRIMARY KEY,\n"
-                + " estado_proyecto TEXT DEFAULT 'No inscrito',\n"
+                + " estado_proyecto TEXT CHECK (estado_proyecto IN (\n"
+                + "     'NoAsignado',\n"
+                + "     'PrimerRevision',\n"
+                + "     'SegundoRevision',\n"
+                + "     'TercerRevision',\n"
+                + "     'Rechazado',\n"
+                + "     'Aprobado'\n"
+                + " )) DEFAULT 'NoAsignado',\n"
                 + " FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE\n"
                 + ");";
+
 
         String sqlProfesor = "CREATE TABLE IF NOT EXISTS Profesor (\n"
                 + " id_usuario INTEGER PRIMARY KEY,\n"
@@ -319,7 +408,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
         String sqlFormatoAInv = "CREATE TABLE IF NOT EXISTS FormatoAInvestigacion (\n"
                 + " id_formato INTEGER PRIMARY KEY AUTOINCREMENT,\n"
                 + " titulo TEXT NOT NULL,\n"
-                + " modalidad TEXT CHECK (modalidad IN ('Investigación',  'Practica Profesional')),\n"
+                + " modalidad TEXT CHECK (modalidad IN ('Investigacion',  'PracticaProfesional')),\n"
                 + " fecha_actual TEXT NOT NULL,\n"
                 + " director TEXT,\n"
                 + " codirector TEXT,\n"
@@ -328,6 +417,8 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                 + " objetivo_general TEXT,\n"
                 + " objetivos_especificos TEXT,\n"
                 + " archivo_proyecto BLOB,\n"
+                + " intento INTEGER DEFAULT 1 CHECK (intento BETWEEN 1 AND 3),"
+                + " estado TEXT DEFAULT 'EnRevision' CHECK (estado IN ('EnRevision', 'Aprobado', 'Rechazado')),\n"
                 + " FOREIGN KEY (correo_estudiante) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
                 + " FOREIGN KEY (id_profesor) REFERENCES Profesor(id_usuario) ON DELETE CASCADE\n"
                 + ");";
@@ -335,7 +426,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
         String sqlFormatoAPas = "CREATE TABLE IF NOT EXISTS FormatoAPracticaProfesional (\n"
                 + " id_formato INTEGER PRIMARY KEY AUTOINCREMENT,\n"
                 + " titulo TEXT NOT NULL,\n"
-                + " modalidad TEXT CHECK (modalidad IN ('Investigación', 'Practica Profesional')),\n"
+                + " modalidad TEXT CHECK (modalidad IN ('Investigacion', 'PracticaProfesional')),\n"
                 + " fecha_actual TEXT NOT NULL,\n"
                 + " director TEXT,\n"
                 + " codirector TEXT,\n"
@@ -345,6 +436,8 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                 + " objetivos_especificos TEXT,\n"
                 + " archivo_proyecto BLOB,\n"
                 + " carta_recomendacion BLOB,\n"
+                + " intento INTEGER DEFAULT 1 CHECK (intento BETWEEN 1 AND 3),"
+                + " estado TEXT DEFAULT 'EnRevision' CHECK (estado IN ('EnRevision', 'Aprobado', 'Rechazado')),\n"
                 + " FOREIGN KEY (correo_estudiante) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
                 + " FOREIGN KEY (id_profesor) REFERENCES Profesor(id_usuario) ON DELETE CASCADE\n"
                 + ");";

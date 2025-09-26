@@ -8,6 +8,8 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -70,7 +72,7 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Label>
-        <TextArea fx:id="txtComentarios" layoutX="64.0" layoutY="255.0" prefHeight="166.0" prefWidth="617.0" style="-fx-background-color: EEE9E9;" text="Comentarios...">
+        <TextArea fx:id="txtComentarios" layoutX="64.0" layoutY="255.0" prefHeight="166.0" prefWidth="617.0" promptText="Comentarios..." style="-fx-background-color: EEE9E9;">
             <font>
                 <Font name="System Italic" size="14.0" />
             </font>
@@ -78,7 +80,7 @@
                 <ColorAdjust brightness="-0.09" contrast="0.32" hue="-0.02" saturation="0.09" />
             </effect>
         </TextArea>
-        <Button fx:id="btnEnviarEvalucacion" blendMode="SRC_ATOP" layoutX="551.0" layoutY="477.0" mnemonicParsing="false" onAction="#eventBtnEnviarEvaluacion" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #B3191C; -fx-background-radius: 15;" text="Enviar Evaluación" textFill="WHITE">
+        <Button fx:id="btnEnviarEvalucacion" blendMode="SRC_ATOP" layoutX="539.0" layoutY="484.0" mnemonicParsing="false" onAction="#eventBtnEnviarEvaluacion" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #B3191C; -fx-background-radius: 15;" text="Enviar Evaluación" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -114,10 +116,23 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <RadioButton layoutX="71.0" layoutY="437.0" mnemonicParsing="false" text="Adjuntar Firma de Aprobacion">
+        <RadioButton fx:id="rdbAdjuntarFirma" layoutX="71.0" layoutY="437.0" mnemonicParsing="false" text="Adjuntar Firma de Aprobacion">
             <font>
                 <Font size="15.0" />
             </font>
         </RadioButton>
+      <Button fx:id="btnDescargarFormatoA" blendMode="SRC_ATOP" layoutX="510.0" layoutY="192.0" mnemonicParsing="false" onAction="#eventBtnDescargarFormatoA" prefHeight="30.0" prefWidth="171.0" style="-fx-background-color: #B3191C; -fx-background-radius: 15;" text="Descargar FormatoA" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="136.0" fitWidth="119.0" layoutX="536.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/descargarArchivo.jpg" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

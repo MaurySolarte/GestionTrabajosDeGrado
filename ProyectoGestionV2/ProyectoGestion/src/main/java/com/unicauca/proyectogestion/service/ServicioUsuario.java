@@ -50,6 +50,17 @@ public class ServicioUsuario {
         return usuario;
     }
 
+    public Usuario obtenerUsuarioPorCodigo(String codigo){
+
+        Usuario usuario = repositorioUsuario.obtenerUsuarioPorCodigo(codigo);
+
+        return usuario;
+    }
+
+
+
+
+
     public String obtenerRolUsuario(String email) {
         return repositorioUsuario.obtenerRolUsuario(email);
     }
@@ -87,4 +98,6 @@ public class ServicioUsuario {
 
         return "OK";
     }
+
+
 }

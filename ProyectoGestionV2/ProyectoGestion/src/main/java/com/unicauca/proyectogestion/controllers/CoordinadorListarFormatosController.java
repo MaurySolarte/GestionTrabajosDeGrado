@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.event.ActionEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class CoordinadorListarFormatosController {
     private TableColumn<FormatoATabla, String> tipoDeProyecto;
 
     @FXML
-    private TableColumn<FormatoATabla, String> evaluado;
+    private TableColumn<FormatoATabla, String> tituloProyecto;
 
     @FXML
     private TableColumn<FormatoATabla, Void> evaluar;
@@ -64,8 +65,13 @@ public class CoordinadorListarFormatosController {
         correoEstudiante.setCellValueFactory(new PropertyValueFactory<>("correoEstudiante"));
         director.setCellValueFactory(new PropertyValueFactory<>("director"));
         tipoDeProyecto.setCellValueFactory(new PropertyValueFactory<>("tipoProyecto"));
-        evaluado.setCellValueFactory(new PropertyValueFactory<>("evaluado"));
-
+        tituloProyecto.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        // 🔹 Aquí cargas las modalidades en el ComboBox
+        cbxFiltros.setItems(FXCollections.observableArrayList(
+                "Investigacion",
+                "PracticaProfesional"
+        ));
+        cbxFiltros.setPromptText("Modalidad");
         // Agregar botón Evaluar
         evaluar.setCellFactory(param -> new TableCell<>() {
             private final Label btn = new Label("Evaluar");
@@ -91,7 +97,23 @@ public class CoordinadorListarFormatosController {
 
         cargarFormatos();
 
+    }
+    @FXML
+    void eventBtnVolver(MouseEvent event) {
+        Navegacion.cambiarVista("dashboardCoordinador");
+    }
 
+    @FXML
+    void eventDesplegar(ActionEvent event) {
+        cbxFiltros.setItems(FXCollections.observableArrayList(
+                "Investigacion", "PracticaProfesional"
+        ));
+    }
+
+    private List<FormatoATabla> filtrarPorModalidad(List<FormatoATabla> lista, String modalidad) {
+        return lista.stream()
+                .filter(f -> f.getTipoProyecto().equalsIgnoreCase(modalidad))
+                .collect(Collectors.toList());
     }
 
     private List<FormatoATabla> filtrarPorCorreo(List<FormatoATabla> lista, String correoFiltro) {
@@ -107,16 +129,30 @@ public class CoordinadorListarFormatosController {
     }
 
     private void abrirVentanaEvaluar(FormatoATabla formato) {
-        System.out.println("Evaluando proyecto de: " + formato.getCorreoEstudiante());
         DashboardCoordinadorController controlador = Navegacion.getController("dashboardCoordinador");
         AnchorPane anchorPaneCentral = controlador.getAchrPane();
-        Navegacion.cargarEnAnchorPane(anchorPaneCentral, "CoordinadorEvaluarFormato");
 
+        // Cargar FXML y obtener controlador
+        CoordinadorEvaluarFormatoController ctrl = (CoordinadorEvaluarFormatoController)
+                Navegacion.cargarEnAnchorPane(anchorPaneCentral, "CoordinadorEvaluarFormato");
+        System.out.println("id formato :"+formato.getIdFormato());
+        System.out.println("nombre" +formato.getTitulo());
+
+        // Pasar id del formato al nuevo controlador
+        ctrl.setIdFormato(formato.getIdFormato(), formato.getTipoProyecto());
     }
 
     @FXML
     void btnEventFiltrar(MouseEvent event) {
-        // lógica de filtros
+        String modalidadSeleccionada = cbxFiltros.getSelectionModel().getSelectedItem();
+        List<FormatoATabla> todos = servicioFormatoA.obtenerFormatos();
+
+        if (modalidadSeleccionada != null && !modalidadSeleccionada.isEmpty()) {
+            List<FormatoATabla> filtrados = filtrarPorModalidad(todos, modalidadSeleccionada);
+            tblFormatos.setItems(FXCollections.observableArrayList(filtrados));
+        } else {
+            tblFormatos.setItems(FXCollections.observableArrayList(todos)); // muestra todos si no hay filtro
+        }
     }
 
     @FXML

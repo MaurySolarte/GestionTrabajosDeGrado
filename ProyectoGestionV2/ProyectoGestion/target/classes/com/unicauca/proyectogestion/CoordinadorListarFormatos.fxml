@@ -61,7 +61,7 @@
                 <TableColumn fx:id="correoEstudiante" prefWidth="124.800048828125" text="Correo Estudiante" />
                 <TableColumn fx:id="director" prefWidth="136.80003356933594" text="Director" />
                 <TableColumn fx:id="tipoDeProyecto" prefWidth="171.199951171875" text="Tipo de Proyecto" />
-                <TableColumn fx:id="evaluado" prefWidth="87.199951171875" text="Evaluado" />
+                <TableColumn fx:id="tituloProyecto" prefWidth="87.199951171875" text="Titulo" />
             <TableColumn fx:id="evaluar" prefWidth="124.800048828125" text="Evaluar" />
             </columns>
             <columnResizePolicy>
@@ -73,7 +73,7 @@
                 <Image url="@images/lupa (1).png" />
             </image>
         </ImageView>
-      <ComboBox fx:id="cbxFiltros" layoutX="98.0" layoutY="183.0" prefHeight="26.0" prefWidth="332.0" />
+      <ComboBox fx:id="cbxFiltros" layoutX="98.0" layoutY="183.0" onAction="#eventDesplegar" prefHeight="26.0" prefWidth="332.0" promptText="Modalida" style="-fx-background-radius: 15;" />
       <Label layoutX="98.0" layoutY="151.0" text="Filtrar Formatos A" />
       <ImageView fx:id="btnfiltrar" fitHeight="38.0" fitWidth="55.0" layoutX="440.0" layoutY="177.0" onMouseClicked="#btnEventFiltrar" pickOnBounds="true" preserveRatio="true">
          <image>

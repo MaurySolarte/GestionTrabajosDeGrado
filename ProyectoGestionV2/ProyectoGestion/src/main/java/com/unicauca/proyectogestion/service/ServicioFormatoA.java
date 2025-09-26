@@ -18,9 +18,21 @@ public class ServicioFormatoA {
     public void guardarArchivoEnBD(File fileFormato, File fileCarta, String tipo, FormatoA formato) {
         repositorioFormatoA.guardarArchivoEnBD(fileFormato,fileCarta, tipo, formato);
     }
-    
+    public byte[] obtenerArchivoFormatoA(int idFormato, String tipo) {
+        return repositorioFormatoA.obtenerArchivoFormatoA(idFormato, tipo);
+    }
     public List<FormatoATabla> obtenerFormatos(){
         return repositorioFormatoA.obtenerFormatos();
     }
 
+    public FormatoATabla obtenerFormatoPorCorreo(String correoBuscado){
+        return repositorioFormatoA.obtenerFormatoPorCorreo(correoBuscado);
+    }
+    public boolean actualizarEstadoFormato(int idFormato, String tipo, String nuevoEstado) {
+        return repositorioFormatoA.actualizarEstadoFormato(idFormato, tipo, nuevoEstado);
+    }
+
+    public FormatoATabla obtenerFormato(int idFormato){
+        return repositorioFormatoA.obtenerFormato(idFormato);
+    }
 }
