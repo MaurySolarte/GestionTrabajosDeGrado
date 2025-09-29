@@ -4,10 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -52,12 +49,12 @@
                 </HBox>
             </children>
         </VBox>
-        <Label layoutX="58.0" layoutY="124.0" text="Correo Estudiante: ">
+        <Label fx:id="lblCorreoEstudiante2" layoutX="59.0" layoutY="132.0" text="Correo Estudiante: ">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Label>
-        <Label layoutX="58.0" layoutY="160.0" text="Nombre Director: ">
+        <Label layoutX="58.0" layoutY="163.0" text="Nombre Director: ">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
@@ -67,20 +64,12 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Label>
-        <Label layoutX="58.0" layoutY="87.0" text="Nombre Propuesta: ">
+        <Label layoutX="58.0" layoutY="65.0" text="Nombre Propuesta: ">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Label>
-        <TextArea fx:id="txtComentarios" layoutX="64.0" layoutY="255.0" prefHeight="166.0" prefWidth="617.0" promptText="Comentarios..." style="-fx-background-color: EEE9E9;">
-            <font>
-                <Font name="System Italic" size="14.0" />
-            </font>
-            <effect>
-                <ColorAdjust brightness="-0.09" contrast="0.32" hue="-0.02" saturation="0.09" />
-            </effect>
-        </TextArea>
-        <Button fx:id="btnEnviarEvalucacion" blendMode="SRC_ATOP" layoutX="539.0" layoutY="484.0" mnemonicParsing="false" onAction="#eventBtnEnviarEvaluacion" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #B3191C; -fx-background-radius: 15;" text="Enviar Evaluación" textFill="WHITE">
+        <Button fx:id="btnAprobar" blendMode="SRC_ATOP" layoutX="549.0" layoutY="484.0" mnemonicParsing="false" onAction="#eventBtnAprobar" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #4AB021; -fx-background-radius: 15;" text="Aprobar Proyecto" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -88,17 +77,17 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <Label fx:id="lblNombrePropuesta" layoutX="240.0" layoutY="87.0" text="  ">
+        <Label fx:id="lblNombrePropuesta" layoutX="240.0" layoutY="65.0" text="  ">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Label>
-        <Label fx:id="lblCorreoEstudiante" layoutX="236.0" layoutY="124.0" text="  ">
+        <Label fx:id="lblCorreo2" layoutX="237.0" layoutY="132.0" text="  ">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
         </Label>
-        <Label fx:id="lblNombreDirector" layoutX="232.0" layoutY="160.0" text="  ">
+        <Label fx:id="lblNombreDirector" layoutX="232.0" layoutY="163.0" text="  ">
             <font>
                 <Font name="System Bold" size="15.0" />
             </font>
@@ -108,7 +97,7 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Label>
-        <Button fx:id="btnCancelar" blendMode="SRC_ATOP" layoutX="64.0" layoutY="484.0" mnemonicParsing="false" onAction="#eventBtnCancelar" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #B3191C; -fx-background-radius: 15;" text="Cancelar" textFill="WHITE">
+        <Button fx:id="btnCancelar" blendMode="SRC_ATOP" layoutX="51.0" layoutY="484.0" mnemonicParsing="false" onAction="#eventBtnCancelar" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #949D90; -fx-background-radius: 15;" text="Cancelar" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -116,12 +105,7 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <RadioButton fx:id="rdbAdjuntarFirma" layoutX="71.0" layoutY="437.0" mnemonicParsing="false" text="Adjuntar Firma de Aprobacion">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </RadioButton>
-      <Button fx:id="btnDescargarFormatoA" blendMode="SRC_ATOP" layoutX="510.0" layoutY="192.0" mnemonicParsing="false" onAction="#eventBtnDescargarFormatoA" prefHeight="30.0" prefWidth="171.0" style="-fx-background-color: #B3191C; -fx-background-radius: 15;" text="Descargar FormatoA" textFill="WHITE">
+      <Button fx:id="btnDescargarFormatoA" blendMode="SRC_ATOP" layoutX="510.0" layoutY="192.0" mnemonicParsing="false" onAction="#eventBtnDescargarFormatoA" prefHeight="30.0" prefWidth="171.0" style="-fx-background-color: #3857C7; -fx-background-radius: 15;" text="Descargar FormatoA" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -134,5 +118,36 @@
             <Image url="@images/descargarArchivo.jpg" />
          </image>
       </ImageView>
+      <Button fx:id="btnRechazar" blendMode="SRC_ATOP" layoutX="383.0" layoutY="484.0" mnemonicParsing="false" onAction="#eventBtnRechazar" prefHeight="30.0" prefWidth="142.0" style="-fx-background-color: #B3191C; -fx-background-radius: 15;" text="Rechazar Proyecto" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="133.0" fitWidth="106.0" layoutX="59.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/subirArchivo.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnSubirCorrecion" blendMode="SRC_ATOP" layoutX="51.0" layoutY="393.0" mnemonicParsing="false" onAction="#eventBtnSubirCorreccion" prefHeight="30.0" prefWidth="171.0" style="-fx-background-color: #3857C7; -fx-background-radius: 15;" text="Subir Correccion" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="lblCorreoEstudiante1" layoutX="58.0" layoutY="97.0" text="Correo Estudiante: ">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCorreo1" layoutX="236.0" layoutY="97.0" text="  ">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

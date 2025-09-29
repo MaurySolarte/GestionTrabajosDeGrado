@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9445b3c5-b120-49c7-8e54-c49e6c947df3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/service/ServicioNotificaciones.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/ProyectoGestionDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/ProyectoGestionDB.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/identifier.sqlite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/RegisterController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/Factory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/Gestion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/IRepositorioFormatoA.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/IRepositorioFormatoA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/IRepositorioUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/IRepositorioUsuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/RepositorioFormatoA.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/RepositorioFormatoA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/RepositorioUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/access/RepositorioUsuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/CoordinadorEvaluarFormatoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/CoordinadorEvaluarFormatoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/CoordinadorListarFormatosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/CoordinadorListarFormatosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/DashboardCoordinadorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/DashboardCoordinadorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/DashboardEstudianteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/DashboardEstudianteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/DashboardProfesorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/DashboardProfesorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/EstudianteSeguimientoProyectoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/EstudianteSeguimientoProyectoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/ProfesorSubirFormatoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/ProfesorSubirFormatoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/controllers/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/domain/FormatoAInvestigacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/domain/FormatoAInvestigacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/service/Servicio.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/service/ServicioFormatoA.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/service/ServicioFormatoA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/service/ServicioUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/service/ServicioUsuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/utilities/FormatoATabla.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/utilities/FormatoATabla.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/utilities/Navegacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/java/com/unicauca/proyectogestion/utilities/Navegacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/CoordinadorEvaluarFormatoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/EnumEstadoFormatos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/EnumEstadoProyecto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/FormatoAInvestigacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/CoordinadorEvaluarFormato.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/CoordinadorEvaluarFormato.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/CoordinadorListarFormatos.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/CoordinadorListarFormatos.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/EstudianteSeguimientoProyecto.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/EstudianteSeguimientoProyecto.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/ProfesorSubirFormato.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/ProfesorSubirFormato.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/dashboardCoordinador.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/dashboardCoordinador.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/dashboardEstudiante.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/dashboardEstudiante.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/dashboardProfesor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/dashboardProfesor.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/images/bajarArchivos.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/images/subirarchivo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/main/resources/com/unicauca/proyectogestion/register.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/CoordinadorEvaluarFormatoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/EnumEstadoFormatos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/EnumEstadoProyecto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/FormatoAInvestigacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/CoordinadorEvaluarFormato.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/CoordinadorEvaluarFormato.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/CoordinadorListarFormatos.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/CoordinadorListarFormatos.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/EstudianteSeguimientoProyecto.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/EstudianteSeguimientoProyecto.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/ProfesorSubirFormato.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/ProfesorSubirFormato.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/RegisterController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/Gestion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/IRepositorioFormatoA.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/IRepositorioFormatoA.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/IRepositorioUsuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/IRepositorioUsuario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/RepositorioFormatoA.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/RepositorioFormatoA.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/RepositorioUsuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/access/RepositorioUsuario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/CoordinadorEvaluarFormatoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/CoordinadorEvaluarFormatoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/CoordinadorListarFormatosController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/CoordinadorListarFormatosController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/CoordinadorListarFormatosController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/CoordinadorListarFormatosController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/DashboardCoordinadorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/DashboardCoordinadorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/DashboardEstudianteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/DashboardEstudianteController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/DashboardProfesorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/DashboardProfesorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/EstudianteSeguimientoProyectoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/EstudianteSeguimientoProyectoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/ProfesorSubirFormatoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/ProfesorSubirFormatoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/RegisterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/controllers/RegisterController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/dashboardCoordinador.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/dashboardCoordinador.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/dashboardEstudiante.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/dashboardEstudiante.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/dashboardProfesor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/dashboardProfesor.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/domain/FormatoAInvestigacion.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/domain/FormatoAInvestigacion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/images/bajarArchivos.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/images/subirarchivo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/register.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/register.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/service/Servicio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/service/ServicioFormatoA.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/service/ServicioFormatoA.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/service/ServicioUsuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/service/ServicioUsuario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/utilities/FormatoATabla.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/utilities/FormatoATabla.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/utilities/Navegacion.class" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/classes/com/unicauca/proyectogestion/utilities/Navegacion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/surefire-reports/TEST-com.unicauca.proyectogestion.service.ServicioTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/surefire-reports/com.unicauca.proyectogestion.service.ServicioTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/target/test-classes/com/unicauca/proyectogestion/service/ServicioTest.class" beforeDir="false" />
+    </list>
+    <list id="1caad625-eab1-4ab9-9b5c-b6e3d6595cc7" name="Changes by Maury" comment="">
+      <change beforePath="$PROJECT_DIR$/ProyectoGestion/src/test/java/com/unicauca/proyectogestion/service/ServicioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProyectoGestion/src/test/java/com/unicauca/proyectogestion/service/ServicioUsuarioTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="33M5micZ2F8heEEH5WhEfYTdF95" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Codigo-Fuente",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9445b3c5-b120-49c7-8e54-c49e6c947df3" name="Changes" comment="" />
+      <created>1759114263412</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759114263412</updated>
+      <workItem from="1759114265332" duration="616000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

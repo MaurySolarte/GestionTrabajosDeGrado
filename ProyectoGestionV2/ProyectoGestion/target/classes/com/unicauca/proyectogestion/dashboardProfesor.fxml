@@ -19,7 +19,7 @@
                   <Image url="@images/perfil (1).png" />
                </image>
             </ImageView>
-            <Label fx:id="lblNombre" layoutX="79.0" layoutY="176.0" text="Nombre" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="lblNombre" layoutX="14.0" layoutY="176.0" text="Nombre" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -27,18 +27,6 @@
             <HBox fx:id="bxMisDatos" alignment="CENTER" layoutY="251.0" onMouseClicked="#mostrarMisDatos" prefHeight="55.0" prefWidth="235.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
                <children>
                   <Label text="Mis Datos" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </HBox>
-            <HBox alignment="CENTER" layoutY="416.0" prefHeight="55.0" prefWidth="235.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
-               <children>
-                  <Label text="Evaluar Monografías" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -60,9 +48,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER" layoutY="361.0" prefHeight="55.0" prefWidth="235.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
+            <HBox alignment="CENTER" layoutY="361.0" onMouseClicked="#mostrarResubirFormato" prefHeight="55.0" prefWidth="235.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
                <children>
-                  <Label text="Evaluar Anteproyectos" textAlignment="CENTER" textFill="WHITE">
+                  <Label text="Resubir Formato" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>

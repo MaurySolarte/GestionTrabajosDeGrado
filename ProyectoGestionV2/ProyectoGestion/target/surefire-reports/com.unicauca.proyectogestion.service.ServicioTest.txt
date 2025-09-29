@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.unicauca.proyectogestion.service.ServicioTest
--------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.398 s -- in com.unicauca.proyectogestion.service.ServicioTest

@@ -36,6 +36,9 @@ public class RegisterController implements Initializable {
     private TextField txtApellidos;
 
     @FXML
+    private TextField txtAreaInvestigacion;
+
+    @FXML
     private TextField txtCelular;
 
     @FXML
@@ -49,6 +52,8 @@ public class RegisterController implements Initializable {
     
     @FXML
     private Button btnCrearCuenta;
+
+
     
 
     //Variables globales de objetos que se usan en toda la clase.
@@ -101,9 +106,12 @@ public class RegisterController implements Initializable {
         }else if(txtApellidos.getText() == ""){
             Navegacion.mostrarAlerta("Campos vacíos", "Por favor ingrese sus apellidos.", Alert.AlertType.WARNING);
             return true;
-        }else if(txtCorreo.getText() == ""){
-            Navegacion. mostrarAlerta("Campos vacíos", "Por favor ingrese un correo.", Alert.AlertType.WARNING);
+        }else if(txtCorreo.getText() == "") {
+            Navegacion.mostrarAlerta("Campos vacíos", "Por favor ingrese un correo.", Alert.AlertType.WARNING);
             return true;
+        }else if(txtAreaInvestigacion.getText() == ""){
+                Navegacion. mostrarAlerta("Campos vacíos", "Por favor ingrese un correo.", Alert.AlertType.WARNING);
+                return true;
         }else if(txtContrasenia.getText() == ""){
             Navegacion.mostrarAlerta("Campos vacíos", "Por favor ingrese una contraseña.", Alert.AlertType.WARNING);
             return true;
@@ -115,14 +123,13 @@ public class RegisterController implements Initializable {
             return true;
         }      
         return false;
-        
     }
     
     private void capturarDatosUsuario(){
         String nombres = txtNombres.getText();
         String apellidos = txtApellidos.getText();
         String correo = txtCorreo.getText();
-        
+        String areaInvestigacion = txtAreaInvestigacion.getText();
         String contrasenia = txtContrasenia.getText();
         String celular = txtCelular.getText();
         EnumProgramas programa = null;
@@ -140,21 +147,21 @@ public class RegisterController implements Initializable {
         EnumRoles rol;
         if(rdbDocente.isSelected()){
             rol = EnumRoles.Profesor;
+            nuevoUsuario = new Profesor(nombres, apellidos, celular, programa, rol, correo, contrasenia,areaInvestigacion);
         }else if (rdbEstudiante.isSelected()){
             rol = EnumRoles.Estudiante;
+            nuevoUsuario = new Usuario(nombres, apellidos, celular, programa, rol, correo, contrasenia);
         }else{
             rol = EnumRoles.Coordinador;
+            nuevoUsuario = new Usuario(nombres, apellidos, celular, programa, rol, correo, contrasenia);
         }
-        
-        nuevoUsuario = new Usuario(nombres, apellidos, celular, programa, rol, correo, contrasenia);
-        
+
     }
     
     private void registrarUsuario(){
         try{        
             if(servicioUsuario.registrarUsuario(nuevoUsuario)){
                 Navegacion.mostrarAlerta("Cuenta creada", "Cuenta creada exitosamente", Alert.AlertType.INFORMATION);
-
             }
             else{
                 Navegacion.mostrarAlerta("Cuenta existente.", "Ya existe una cuenta registrada con ese correo.", Alert.AlertType.ERROR);
@@ -189,6 +196,7 @@ public class RegisterController implements Initializable {
         if(rdbEstudiante.isSelected()){
             this.rdbDocente.setSelected(false);
             this.rdbCoordinador.setSelected(false);
+            this.txtAreaInvestigacion.setVisible(false);
         }
     }
     
@@ -197,6 +205,8 @@ public class RegisterController implements Initializable {
         if(rdbDocente.isSelected()){
             this.rdbEstudiante.setSelected(false);
             this.rdbCoordinador.setSelected(false);
+            this.txtAreaInvestigacion.setVisible(true);
+
         }
     }
 
@@ -205,12 +215,27 @@ public class RegisterController implements Initializable {
         if(rdbCoordinador.isSelected()){
             this.rdbEstudiante.setSelected(false);
             this.rdbDocente.setSelected(false);
+            this.txtAreaInvestigacion.setVisible(false);
         }
     }
      
      @FXML
     void eventClicklblVolver(MouseEvent event) {
          Navegacion.cambiarVista("login");
+         LoginController controlador = Navegacion.getController("login");
+         controlador.limpiar();
+    }
+
+    public void limpiar(){
+        txtNombres.clear();
+        txtApellidos.clear();
+        txtCelular.clear();
+        txtContrasenia.clear();
+        txtCorreo.clear();
+        cbxPrograma.setValue(null);
+        rdbEstudiante.setSelected(false);
+        rdbDocente.setSelected(false);
+        rdbCoordinador.setSelected(false);
     }
     
 }

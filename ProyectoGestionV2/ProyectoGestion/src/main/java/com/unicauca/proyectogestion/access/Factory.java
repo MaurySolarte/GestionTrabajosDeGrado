@@ -1,6 +1,6 @@
 package com.unicauca.proyectogestion.access;
 
-public class Factory {
+public class    Factory {
     
     private static Factory instancia;
 

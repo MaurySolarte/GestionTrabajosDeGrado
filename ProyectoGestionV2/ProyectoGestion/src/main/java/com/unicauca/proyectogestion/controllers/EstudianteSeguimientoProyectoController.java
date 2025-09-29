@@ -2,11 +2,9 @@ package com.unicauca.proyectogestion.controllers;
 
 import com.unicauca.proyectogestion.access.Factory;
 import com.unicauca.proyectogestion.access.IRepositorioFormatoA;
-import com.unicauca.proyectogestion.domain.Estudiante;
 import com.unicauca.proyectogestion.domain.FormatoA;
 import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.service.ServicioFormatoA;
-import com.unicauca.proyectogestion.service.ServicioUsuario;
 import com.unicauca.proyectogestion.utilities.FormatoATabla;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import javafx.fxml.FXML;
@@ -45,28 +43,20 @@ public class EstudianteSeguimientoProyectoController implements Initializable {
     @FXML
     private Tab tbpnInfoProyecto;
 
-
     private Usuario usuario;
     private FormatoATabla formatoA;
     private ServicioFormatoA servicioFormatoA;
-    private ServicioUsuario servicioUsuario;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         IRepositorioFormatoA repositorioFormatoA = Factory.getInstancia().obtenerRepositorioFormatoA("SQLite");
         servicioFormatoA = new ServicioFormatoA(repositorioFormatoA);
-//        var repositorioUsuario = Factory.getInstancia().obtenerRepositorioUsuario("SQLite");
-//        servicioUsuario = new ServicioUsuario(repositorioUsuario);
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public void inicializarUsuario(Usuario usuario) {
         setUsuario(usuario);
         //cargarUsuario();
-       cargarProyecto();
+        cargarProyecto();
     }
 
     private void cargarProyecto() {
@@ -92,8 +82,12 @@ public class EstudianteSeguimientoProyectoController implements Initializable {
             lblFechaInicio.setText("-");
             lblEstadoActual.setText("-");
         }
-        }
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 
 
+}

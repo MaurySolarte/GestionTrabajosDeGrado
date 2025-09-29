@@ -33,6 +33,10 @@ public class ServicioUsuario {
         return repositorioUsuario.registrarUsuario(nuevoUsuario);
     }
 
+    public boolean actualizarEstadoEstudiantePorCorreo(String correo, String nuevoEstado) {
+        return repositorioUsuario.actualizarEstadoEstudiantePorCorreo(correo, nuevoEstado);
+    }
+
     public int iniciarSesion(String email, String contrasenia){
 
         if (email == null || email.isEmpty() || contrasenia == null || contrasenia.isEmpty()){
@@ -58,7 +62,9 @@ public class ServicioUsuario {
     }
 
 
-
+    public Profesor obtenerProfesorPorNombre(String nombreCompleto) {
+        return repositorioUsuario.obtenerProfesorPorNombre(nombreCompleto);
+    }
 
 
     public String obtenerRolUsuario(String email) {

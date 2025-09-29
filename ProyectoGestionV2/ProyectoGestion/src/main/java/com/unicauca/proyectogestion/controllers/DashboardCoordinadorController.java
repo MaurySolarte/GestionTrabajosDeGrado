@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import com.unicauca.proyectogestion.domain.Usuario;
+import com.unicauca.proyectogestion.service.ServicioNotificaciones;
 import com.unicauca.proyectogestion.utilities.Navegacion;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
@@ -41,6 +44,8 @@ public class DashboardCoordinadorController implements Initializable {
     private void listarFormatos() throws IOException {
         CoordinadorListarFormatosController controlador
                 = Navegacion.cargarEnAnchorPane(achrPnCentral, "CoordinadorListarFormatos");
+
+        controlador.setUsuario(usuario);
     }
 
     public void inicializarUsuario(Usuario usuario){

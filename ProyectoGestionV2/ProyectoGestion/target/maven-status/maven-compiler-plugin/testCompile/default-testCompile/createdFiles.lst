@@ -1,1 +1,2 @@
-com\unicauca\proyectogestion\service\ServicioTest.class
+org\mockito\InjectMocks.class
+com\unicauca\proyectogestion\service\ServicioFormatoTest.class

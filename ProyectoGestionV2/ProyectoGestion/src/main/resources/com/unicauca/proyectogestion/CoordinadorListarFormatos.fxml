@@ -62,6 +62,7 @@
                 <TableColumn fx:id="director" prefWidth="136.80003356933594" text="Director" />
                 <TableColumn fx:id="tipoDeProyecto" prefWidth="171.199951171875" text="Tipo de Proyecto" />
                 <TableColumn fx:id="tituloProyecto" prefWidth="87.199951171875" text="Titulo" />
+            <TableColumn fx:id="columnaEstado" prefWidth="87.199951171875" text="Estado" />
             <TableColumn fx:id="evaluar" prefWidth="124.800048828125" text="Evaluar" />
             </columns>
             <columnResizePolicy>

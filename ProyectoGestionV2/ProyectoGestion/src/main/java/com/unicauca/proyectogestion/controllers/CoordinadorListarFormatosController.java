@@ -3,6 +3,7 @@ package com.unicauca.proyectogestion.controllers;
 import com.unicauca.proyectogestion.access.Factory;
 import com.unicauca.proyectogestion.access.IRepositorioFormatoA;
 import com.unicauca.proyectogestion.access.IRepositorioUsuario;
+import com.unicauca.proyectogestion.domain.Usuario;
 import com.unicauca.proyectogestion.service.ServicioFormatoA;
 import com.unicauca.proyectogestion.service.ServicioUsuario;
 import com.unicauca.proyectogestion.utilities.FormatoATabla;
@@ -35,6 +36,9 @@ public class CoordinadorListarFormatosController {
     private TableView<FormatoATabla> tblFormatos;
 
     @FXML
+    private TableColumn<FormatoATabla, String> columnaEstado;
+
+    @FXML
     private TableColumn<FormatoATabla, String> correoEstudiante;
 
     @FXML
@@ -51,28 +55,37 @@ public class CoordinadorListarFormatosController {
 
     @FXML
     private TextField txtBuscar;
-    private ServicioUsuario servicioUsuario = null;
     private ServicioFormatoA servicioFormatoA = null;
+    private Usuario usuario = null;
 
     @FXML
     public void initialize() {
 
-        IRepositorioUsuario repositorioUsuario = Factory.getInstancia().obtenerRepositorioUsuario("SQLite");
         IRepositorioFormatoA repositorioFormatoA = Factory.getInstancia().obtenerRepositorioFormatoA("SQLite");
-        servicioUsuario = new ServicioUsuario(repositorioUsuario);
         servicioFormatoA = new ServicioFormatoA(repositorioFormatoA);
 
-        correoEstudiante.setCellValueFactory(new PropertyValueFactory<>("correoEstudiante"));
+        correoEstudiante.setCellValueFactory(cellData -> {
+            String correo1 = cellData.getValue().getCorreoEstudiante1();
+            String correo2 = cellData.getValue().getCorreoEstudiante2();
+
+            String correos = (correo1 != null ? correo1 : "");
+            if (correo2 != null && !correo2.isBlank()) {
+                correos += "\n" + correo2; // salto de línea
+            }
+            return new javafx.beans.property.SimpleStringProperty(correos);
+        });
+
         director.setCellValueFactory(new PropertyValueFactory<>("director"));
+        columnaEstado.setCellValueFactory(new PropertyValueFactory<>("estadoActual"));
         tipoDeProyecto.setCellValueFactory(new PropertyValueFactory<>("tipoProyecto"));
         tituloProyecto.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        // 🔹 Aquí cargas las modalidades en el ComboBox
+
         cbxFiltros.setItems(FXCollections.observableArrayList(
                 "Investigacion",
                 "PracticaProfesional"
         ));
         cbxFiltros.setPromptText("Modalidad");
-        // Agregar botón Evaluar
+
         evaluar.setCellFactory(param -> new TableCell<>() {
             private final Label btn = new Label("Evaluar");
 
@@ -118,9 +131,12 @@ public class CoordinadorListarFormatosController {
 
     private List<FormatoATabla> filtrarPorCorreo(List<FormatoATabla> lista, String correoFiltro) {
         return lista.stream()
-                .filter(f -> f.getCorreoEstudiante().toLowerCase().contains(correoFiltro.toLowerCase())).collect(Collectors.toList());
+                .filter(f ->
+                        (f.getCorreoEstudiante1() != null && f.getCorreoEstudiante1().toLowerCase().contains(correoFiltro.toLowerCase())) ||
+                                (f.getCorreoEstudiante2() != null && f.getCorreoEstudiante2().toLowerCase().contains(correoFiltro.toLowerCase()))
+                )
+                .collect(Collectors.toList());
     }
-
 
     private void cargarFormatos() {
         List<FormatoATabla> formatos = servicioFormatoA.obtenerFormatos();
@@ -133,13 +149,14 @@ public class CoordinadorListarFormatosController {
         AnchorPane anchorPaneCentral = controlador.getAchrPane();
 
         // Cargar FXML y obtener controlador
-        CoordinadorEvaluarFormatoController ctrl = (CoordinadorEvaluarFormatoController)
-                Navegacion.cargarEnAnchorPane(anchorPaneCentral, "CoordinadorEvaluarFormato");
+        CoordinadorEvaluarFormatoController ctrl = Navegacion.cargarEnAnchorPane(anchorPaneCentral, "coordinadorEvaluarFormato");
+
         System.out.println("id formato :"+formato.getIdFormato());
         System.out.println("nombre" +formato.getTitulo());
 
         // Pasar id del formato al nuevo controlador
         ctrl.setIdFormato(formato.getIdFormato(), formato.getTipoProyecto());
+        ctrl.setUsuario(usuario);
     }
 
     @FXML
@@ -164,5 +181,9 @@ public class CoordinadorListarFormatosController {
         tblFormatos.setItems(FXCollections.observableArrayList(filtrados));
 
 
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

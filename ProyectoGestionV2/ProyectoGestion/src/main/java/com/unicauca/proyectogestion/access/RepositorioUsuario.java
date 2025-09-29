@@ -25,6 +25,34 @@ public class RepositorioUsuario implements IRepositorioUsuario {
     }
 
     @Override
+    public Profesor obtenerProfesorPorNombre(String nombreCompleto) {
+        String sql = "SELECT * FROM Usuario WHERE (nombres || ' ' || apellidos) = ? AND rol = 'Profesor'";
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:./ProyectoGestionDB.db");
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombreCompleto);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Profesor(
+                            rs.getInt("id_usuario"),
+                            rs.getString("nombres"),
+                            rs.getString("apellidos"),
+                            rs.getString("celular"),
+                            EnumProgramas.valueOf(rs.getString("programa")),
+                            EnumRoles.valueOf(rs.getString("rol")),
+                            rs.getString("email"),
+                            rs.getString("contrasena"),
+                            null // area_investigacion no se obtiene aquí
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    @Override
     public boolean registrarUsuario(Usuario nuevoUsuario) throws SQLException {
         String contrasenaHash = BCrypt.hashpw(nuevoUsuario.getContrasenia(), BCrypt.gensalt());
         String sqlUsuario = "INSERT INTO Usuario (nombres, apellidos, celular, programa, rol, email, contrasena) "
@@ -301,6 +329,30 @@ public class RepositorioUsuario implements IRepositorioUsuario {
         return false;
     }
     @Override
+    public boolean actualizarEstadoEstudiantePorCorreo(String correo, String nuevoEstado) {
+        String sql = "UPDATE Estudiante SET estado_proyecto = ? " +
+                "WHERE id_usuario IN ( " +
+                "    SELECT u.id_usuario " +
+                "    FROM Usuario u " +
+                "    INNER JOIN Estudiante e ON u.id_usuario = e.id_usuario " +
+                "    WHERE u.email = ? " +
+                ")";
+
+        try (Connection conn = DriverManager.getConnection(URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, nuevoEstado);
+            pstmt.setString(2, correo);
+
+            int rows = pstmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
     public List<Profesor> listarProfesores() {
         List<Profesor> profesores = new ArrayList<>();
         String sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.celular, u.programa, u.rol, u.email, p.area_investigacion " +
@@ -384,7 +436,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                 + " estado_proyecto TEXT CHECK (estado_proyecto IN (\n"
                 + "     'NoAsignado',\n"
                 + "     'PrimerRevision',\n"
-                + "     'SegundoRevision',\n"
+                + "     'SegundaRevision',\n"
                 + "     'TercerRevision',\n"
                 + "     'Rechazado',\n"
                 + "     'Aprobado'\n"
@@ -412,14 +464,16 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                 + " fecha_actual TEXT NOT NULL,\n"
                 + " director TEXT,\n"
                 + " codirector TEXT,\n"
-                + " correo_estudiante TEXT NOT NULL,\n"
+                + " correo_estudiante_1 TEXT NOT NULL,\n"
+                + " correo_estudiante_2 TEXT,\n"
                 + " id_profesor INTEGER NOT NULL,\n"
                 + " objetivo_general TEXT,\n"
                 + " objetivos_especificos TEXT,\n"
                 + " archivo_proyecto BLOB,\n"
                 + " intento INTEGER DEFAULT 1 CHECK (intento BETWEEN 1 AND 3),"
                 + " estado TEXT DEFAULT 'EnRevision' CHECK (estado IN ('EnRevision', 'Aprobado', 'Rechazado')),\n"
-                + " FOREIGN KEY (correo_estudiante) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
+                + " FOREIGN KEY (correo_estudiante_1) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
+                + " FOREIGN KEY (correo_estudiante_2) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
                 + " FOREIGN KEY (id_profesor) REFERENCES Profesor(id_usuario) ON DELETE CASCADE\n"
                 + ");";
 
@@ -442,6 +496,23 @@ public class RepositorioUsuario implements IRepositorioUsuario {
                 + " FOREIGN KEY (id_profesor) REFERENCES Profesor(id_usuario) ON DELETE CASCADE\n"
                 + ");";
 
+        String sqlDevolucionFormatoA = "CREATE TABLE IF NOT EXISTS DevolucionFormatoA (\n"
+                + " id_devolucion INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                + " id_formato INTEGER NOT NULL,\n"
+                + " id_profesor INTEGER NOT NULL,\n"
+                + " id_coordinador INTEGER NOT NULL,\n"
+                + " correo_estudiante_1 TEXT NOT NULL,\n"
+                + " correo_estudiante_2 TEXT,\n"
+                + " archivo_devolucion BLOB,\n"
+                + " modalidad TEXT CHECK (modalidad IN ('Investigacion', 'PracticaProfesional')),\n"
+                + " intento INTEGER DEFAULT 1,\n"
+                + " FOREIGN KEY (id_formato) REFERENCES FormatoAInvestigacion(id_formato) ON DELETE CASCADE,\n"
+                + " FOREIGN KEY (correo_estudiante_1) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
+                + " FOREIGN KEY (correo_estudiante_2) REFERENCES Usuario(email) ON DELETE CASCADE,\n"
+                + " FOREIGN KEY (id_profesor) REFERENCES Profesor(id_usuario) ON DELETE CASCADE,\n"
+                + " FOREIGN KEY (id_coordinador) REFERENCES Coordinador(id_usuario) ON DELETE CASCADE\n"
+                + ");";
+
         try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement()) {
             stmt.execute(sqlUsuario);
@@ -450,6 +521,7 @@ public class RepositorioUsuario implements IRepositorioUsuario {
             stmt.execute(sqlCoordinador);
             stmt.execute(sqlFormatoAInv);
             stmt.execute(sqlFormatoAPas);
+            stmt.execute(sqlDevolucionFormatoA);
         } catch (SQLException ex) {
             Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -75,7 +75,6 @@ public class DashboardEstudianteController implements Initializable {
                 Navegacion.cargarEnAnchorPane(anchrPaneCentral,"EstudianteSeguimientoProyecto");
         controlador.inicializarUsuario(usuario);
 
-
     }
     
 }

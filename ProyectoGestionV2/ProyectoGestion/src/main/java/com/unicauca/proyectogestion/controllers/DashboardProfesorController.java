@@ -6,21 +6,20 @@ package com.unicauca.proyectogestion.controllers;
 
 import com.unicauca.proyectogestion.domain.Profesor;
 import com.unicauca.proyectogestion.domain.Usuario;
+import com.unicauca.proyectogestion.service.ServicioNotificaciones;
 import com.unicauca.proyectogestion.utilities.Navegacion;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * FXML Controller class
- *
- * @author admin
- */
 public class DashboardProfesorController implements Initializable {
 
     @FXML
@@ -36,6 +35,7 @@ public class DashboardProfesorController implements Initializable {
         misDatosController controlador
                 = Navegacion.cargarEnAnchorPane(achrPnCentral, "misDatos");
 
+
         if (controlador != null) {
             controlador.setUsuario(this.usuario);
         }
@@ -48,9 +48,26 @@ public class DashboardProfesorController implements Initializable {
         controlador.setUsuario(usuario);
                 
     }
-    
+
+    @FXML
+    private void mostrarResubirFormato() {
+        ProfesorCorreccionesController controlador
+                = Navegacion.cargarEnAnchorPane(achrPnCentral, "ProfesorCorrecciones");
+        controlador.setUsuario(usuario);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ServicioNotificaciones.getInstance().subscribe(msg -> {
+            Platform.runLater(() -> {
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Nueva Notificación");
+                alerta.setHeaderText("Actualización del sistema");
+                alerta.setContentText(msg);
+                alerta.show();
+            });
+        });
         
     }
 
@@ -69,4 +86,7 @@ public class DashboardProfesorController implements Initializable {
         Navegacion.cambiarVista("login");
     }
 
+    public AnchorPane getAchrPane(){
+        return this.achrPnCentral;
+    }
 }

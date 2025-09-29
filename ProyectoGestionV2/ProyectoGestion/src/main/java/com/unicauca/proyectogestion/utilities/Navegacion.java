@@ -1,5 +1,6 @@
 package com.unicauca.proyectogestion.utilities;
 
+import com.unicauca.proyectogestion.App;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -66,8 +67,6 @@ public class Navegacion {
                         "-fx-border-radius: 5px; " +
                         "-fx-background-radius: 5px;"
         );
-
-        // Cambiar estilo de los botones
         alerta.getDialogPane().lookupButton(ButtonType.OK)
                 .setStyle("-fx-background-color: #1E2C9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7px;");
 
@@ -87,25 +86,43 @@ public class Navegacion {
         }
     }
 
-    public static <T> T cargarEnAnchorPane(AnchorPane contenedor, String nombre) {
-    try {
-        FXMLLoader fxmlLoader = new FXMLLoader(Navegacion.class.getResource(
-                "/com/unicauca/proyectogestion/" + nombre + ".fxml"
-        ));
-        Node nodo = fxmlLoader.load();
+    public static void cambiarVistaNuevaVentana(String nombreVista, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Navegacion.class.getResource("/com/unicauca/proyectogestion/" + nombreVista + ".fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        // Reemplazar contenido
-        contenedor.getChildren().setAll(nodo);
+            // Guardar el controlador para luego recuperarlo
+            controladores.put(nombreVista, loader.getController());
 
-        // Retornar el controlador
-        T controlador = fxmlLoader.getController();
-        controladores.put(nombre, controlador); // opcional, si quieres guardarlo
-        return controlador;
-    } catch (IOException e) {
-        e.printStackTrace();
-        return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
+
+
+    public static <T> T cargarEnAnchorPane(AnchorPane contenedor, String nombre) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Navegacion.class.getResource(
+                    "/com/unicauca/proyectogestion/" + nombre + ".fxml"
+            ));
+            Node nodo = fxmlLoader.load();
+
+            // Reemplazar contenido
+            contenedor.getChildren().setAll(nodo);
+
+            // Retornar el controlador
+            T controlador = fxmlLoader.getController();
+            controladores.put(nombre, controlador); // opcional, si quieres guardarlo
+            return controlador;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
     @SuppressWarnings("unchecked")

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IRepositorioUsuario {
-    
+    boolean actualizarEstadoEstudiantePorCorreo(String correo, String nuevoEstado);
     boolean iniciarSesion(String email, String contrasenia);
     boolean registrarUsuario(Usuario nuevoUsuario) throws SQLException;
     boolean buscarEmail(Connection conn, String email) throws SQLException;
@@ -16,4 +16,5 @@ public interface IRepositorioUsuario {
     List<Profesor> listarProfesores();
     Estudiante obtenerEstudiantePorCorreo(String email);
     Usuario obtenerUsuarioPorCodigo(String codigo);
+    Profesor obtenerProfesorPorNombre(String nombreCompleto);
 }

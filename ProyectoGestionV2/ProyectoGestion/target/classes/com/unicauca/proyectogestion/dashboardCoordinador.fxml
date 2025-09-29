@@ -19,11 +19,11 @@
                         <Image url="@images/perfil (1).png" />
                     </image>
                 </ImageView>
-                <Label fx:id="lblNombre" layoutX="79.0" layoutY="176.0" text="Nombre" textAlignment="CENTER" textFill="WHITE">
-                    <font>
-                        <Font size="20.0" />
-                    </font>
-                </Label>
+            <Label fx:id="lblNombre" layoutX="24.0" layoutY="186.0" text="Nombre" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
                 <HBox fx:id="bxMisDatos" alignment="CENTER" layoutY="251.0" onMouseClicked="#mostrarMisDatos" prefHeight="55.0" prefWidth="235.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
                     <children>
                         <Label text="Mis Datos" textAlignment="CENTER" textFill="WHITE">
@@ -32,11 +32,6 @@
                             </font>
                         </Label>
                     </children>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </HBox>
-                <HBox alignment="CENTER" layoutY="416.0" prefHeight="55.0" prefWidth="235.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -59,11 +54,6 @@
                      </cursor>
                   </HBox>
                </children>
-                </HBox>
-                <HBox alignment="CENTER" layoutY="361.0" prefHeight="55.0" prefWidth="235.0" styleClass="sidebar-btn" stylesheets="@dashboardprofesor.css">
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
                 </HBox>
                 <Button fx:id="btn_cerrarSesion" blendMode="SRC_ATOP" layoutX="58.0" layoutY="501.0" mnemonicParsing="false" onAction="#eventBtnCerrarSesion" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #B3191C; -fx-background-radius: 15;" text="Cerrar sesion" textFill="WHITE">
                     <font>

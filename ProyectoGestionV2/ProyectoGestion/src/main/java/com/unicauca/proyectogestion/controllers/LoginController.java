@@ -55,21 +55,21 @@ public class LoginController implements Initializable {
 
                 if ("Profesor".equalsIgnoreCase(rol)) {
                     Navegacion.mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
-                    Navegacion.cambiarVista("dashboardProfesor");
+                    Navegacion.cambiarVistaNuevaVentana("dashboardProfesor","Panel Profesor");
                     DashboardProfesorController controlador = Navegacion.getController("dashboardProfesor");
                     controlador.setUsuario(objUsuario);
                 } else if ("Estudiante".equalsIgnoreCase(rol)) {
                     Navegacion.mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
-                    Navegacion.cambiarVista("dashboardEstudiante");
+                    Navegacion.cambiarVistaNuevaVentana("dashboardEstudiante","Panel Estudiante");
                     DashboardEstudianteController controlador = Navegacion.getController("dashboardEstudiante");
                     controlador.inicializarUsuario(objUsuario);
                     controlador.mostrarMisDatos();
                 }else if ("Coordinador".equalsIgnoreCase(rol)) {
-                    Navegacion.mostrarAlerta("Login exitoso", "Bienvenido " + objUsuario.getNombres(), Alert.AlertType.CONFIRMATION);
-                    Navegacion.cambiarVista("dashboardCoordinador");
+                    Navegacion.cambiarVistaNuevaVentana("dashboardCoordinador", "Panel Coordinador");
                     DashboardCoordinadorController controlador = Navegacion.getController("dashboardCoordinador");
                     controlador.inicializarUsuario(objUsuario);
                     controlador.mostrarMisDatos();
+
                 } else {
                     Navegacion.mostrarAlerta("Error", "No se pudo determinar el rol del usuario", Alert.AlertType.ERROR);
                 }
@@ -88,12 +88,21 @@ public class LoginController implements Initializable {
     @FXML
     private void evenBtnRegistrarse(javafx.scene.input.MouseEvent event) {
         Navegacion.cambiarVista("register");
+        RegisterController controler = Navegacion.getController("register");
+        controler.limpiar();
+    }
+
+    public void limpiar(){
+        txt_contrasenia.clear();
+        txt_usuario.clear();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         IRepositorioUsuario repositorio = Factory.getInstancia().obtenerRepositorioUsuario("SQLite");
         serviceUsuario = new ServicioUsuario(repositorio);
+
+
     }
 
 }
